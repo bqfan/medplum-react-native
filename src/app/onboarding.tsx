@@ -7,37 +7,35 @@ import {
   FocusAwareStatusBar,
   SafeAreaView,
   Text,
-  View,
+  View
 } from '@/components/ui';
 import { useIsFirstTime } from '@/lib/hooks';
+
 export default function Onboarding() {
   const [_, setIsFirstTime] = useIsFirstTime();
   const router = useRouter();
   return (
-    <View className="flex h-full items-center  justify-center">
+    <View className="flex h-full items-center justify-center">
       <FocusAwareStatusBar />
-      <View className="w-full flex-1">
+      <View className="mb-2 text-center text-lg">
         <Cover />
       </View>
       <View className="justify-end ">
-        <Text className="my-3 text-center text-5xl font-bold">
-          Medplum
-        </Text>
         <Text className="mb-2 text-center text-lg text-gray-600">
           Welcome to Medplum
         </Text>
 
         <Text className="my-1 pt-6 text-left text-lg">
-          🏥 Open source healthcare developer platform{' '}
+          🏥 Medplum is a headless EHR.
         </Text>
         <Text className="my-1 text-left text-lg">
-          👨‍⚕️ Build, test, and deliver any healthcare product or service.
+          👨‍⚕️ Open source healthcare platform{' '}
         </Text>
         <Text className="my-1 text-left text-lg">
-          🩺 Medplum is a headless EHR.
+          🩺 Develop any healthcare services.
         </Text>
         <Text className="my-1 text-left text-lg">
-          💊 Using Medplum products you can build many types of healthcare applications.
+          💊 Build many types of applications.
         </Text>
       </View>
       <SafeAreaView className="mt-6">
