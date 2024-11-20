@@ -1,8 +1,8 @@
 <h1 align="center">
-  <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
-Mobile App </h1>
+  <img alt="logo" src="./assets/medplum-logo.png" width="248px" style="border-radius:10px"/><br/>
+Medplum Mobile App </h1>
 
-> This Project is based on [Obytes starter](https://starter.obytes.com)
+> This Project is based on [Obytes starter](https://starter.obytes.com), it is an ongoing project.
 
 ## Requirements
 
