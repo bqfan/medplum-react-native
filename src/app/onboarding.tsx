@@ -26,16 +26,19 @@ export default function Onboarding() {
         </Text>
 
         <Text className="my-1 pt-6 text-left text-lg">
-          🏥 Medplum is a headless EHR.
+          🏥 Open source healthcare platform
         </Text>
         <Text className="my-1 text-left text-lg">
-          👨‍⚕️ Open source healthcare platform{' '}
+          👨‍⚕️ API-first headless EHR
         </Text>
         <Text className="my-1 text-left text-lg">
-          🩺 Develop any healthcare services.
+          🩺 FHIR-native for Interoperability
         </Text>
         <Text className="my-1 text-left text-lg">
-          💊 Build many types of applications.
+          💊 Secure & Compliant
+        </Text>
+        <Text className="my-1 text-left text-lg">
+        💉 For any services & applications
         </Text>
       </View>
       <SafeAreaView className="mt-6">
