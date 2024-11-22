@@ -38,7 +38,7 @@ const BUNDLE_ID = 'com.medplum_react_native'; // ios bundle id
 const PACKAGE = 'com.medplum_react_native'; // android package name
 const NAME = 'Medplum'; // app name
 const EXPO_ACCOUNT_OWNER = 'bqfan'; // expo account owner
-const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id
+const EAS_PROJECT_ID = '3e0b698f-4d08-4f35-a6e5-033ffe637524'; // eas project id
 const SCHEME = 'medplum_react_native'; // app scheme
 
 /**
