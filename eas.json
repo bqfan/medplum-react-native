@@ -54,7 +54,7 @@
       }
     },
     "preview": {
-      "developmentClient": true,
+      "channel": "preview",
       "distribution": "internal",
       "pnpm": "9.12.3",
       "ios": {

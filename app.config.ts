@@ -58,9 +58,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#2E3C4B',
+        backgroundColor: '#FFFFFF',
         image: './assets/medplum-logo.png',
-        imageWidth: 150,
+        imageWidth: 200,
       },
     ],
     [

@@ -38,7 +38,7 @@ const BUNDLE_ID = 'com.medplum_react_native'; // ios bundle id
 const PACKAGE = 'com.medplum_react_native'; // android package name
 const NAME = 'Medplum'; // app name
 const EXPO_ACCOUNT_OWNER = 'bqfan'; // expo account owner
-const EAS_PROJECT_ID = '3e0b698f-4d08-4f35-a6e5-033ffe637524'; // eas project id
+const EAS_PROJECT_ID = '617ec367-470a-499c-991d-af3bd6ee0a49'; // eas project id
 const SCHEME = 'medplum_react_native'; // app scheme
 
 /**
@@ -71,7 +71,7 @@ const withEnvSuffix = (name) => {
  */
 
 const client = z.object({
-  APP_ENV: z.enum(['development', 'staging', 'production']),
+  APP_ENV: z.enum(['development', 'preview', 'staging', 'production']),
   NAME: z.string(),
   SCHEME: z.string(),
   BUNDLE_ID: z.string(),
