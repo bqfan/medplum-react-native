@@ -5,7 +5,7 @@ import { Image } from '@/components/ui';
 
 export const Cover = () => (
   <Image
-    className="h-24 w-screen overflow-hidden rounded-t-xl"
+    className="h-32 w-96 overflow-hidden rounded-t-xl"
     contentFit="cover"
     source={require('../../assets/medplum-logo.png')}
   />
