@@ -34,8 +34,8 @@ require('dotenv').config({
 
 // TODO: Replace these values with your own
 
-const BUNDLE_ID = 'com.medplum_react_native'; // ios bundle id
-const PACKAGE = 'com.medplum_react_native'; // android package name
+const BUNDLE_ID = 'com.medplum.medplum-react-native'; // ios bundle id
+const PACKAGE = 'com.medplum.medplum-react-native'; // android package name
 const NAME = 'Medplum'; // app name
 const EXPO_ACCOUNT_OWNER = 'bqfan'; // expo account owner
 const EAS_PROJECT_ID = '617ec367-470a-499c-991d-af3bd6ee0a49'; // eas project id
