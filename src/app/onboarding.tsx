@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { Dimensions, Image } from 'react-native';
 
-import { Cover } from '@/components/cover';
 import {
   Button,
   FocusAwareStatusBar,
@@ -10,34 +10,44 @@ import {
   View,
 } from '@/components/ui';
 import { useIsFirstTime } from '@/lib/hooks';
+
+const { width } = Dimensions.get('window');
+
 export default function Onboarding() {
   const [_, setIsFirstTime] = useIsFirstTime();
   const router = useRouter();
   return (
-    <View className="flex h-full items-center  justify-center">
+    <View className="flex h-full items-center justify-center">
       <FocusAwareStatusBar />
-      <View className="w-full flex-1">
-        <Cover />
-      </View>
+      <SafeAreaView className="w-full flex-1 items-center justify-center">
+        <Image
+          source={require('../../assets/images/fhir-splash-icon.png')}
+          style={{
+            width: width * 0.8,
+            height: width * 0.8,
+          }}
+          resizeMode="contain"
+        />
+      </SafeAreaView>
       <View className="justify-end ">
-        <Text className="my-3 text-center text-5xl font-bold">
-          Obytes Starter
+        <Text className="my-3 text-center text-3xl font-bold">
+          FHIR React Native
         </Text>
         <Text className="mb-2 text-center text-lg text-gray-600">
-          The right way to build your mobile app
+          🔥HL7 Fast Healthcare Interoperability Resources (FHIR)
         </Text>
 
-        <Text className="my-1 pt-6 text-left text-lg">
-          🚀 Production-ready{' '}
+        <Text className="my-1 pt-6 text-center text-base">
+          🏥 A modern standard for healthcare data exchange
         </Text>
-        <Text className="my-1 text-left text-lg">
-          🥷 Developer experience + Productivity
+        <Text className="my-1 text-center text-base">
+          🩻 Integration with EHRs, apps, and cloud systems
         </Text>
-        <Text className="my-1 text-left text-lg">
-          🧩 Minimal code and dependencies
+        <Text className="my-1 text-center text-base">
+          🌐 Scalability, security, and regulatory compliance
         </Text>
-        <Text className="my-1 text-left text-lg">
-          💪 well maintained third-party libraries
+        <Text className="my-1 text-center text-base">
+          👨‍⚕️ Care coordination, patient engagement
         </Text>
       </View>
       <SafeAreaView className="mt-6">
