@@ -1,7 +1,9 @@
 import React from 'react';
+import { useColorScheme } from 'react-native';
 
 import type { OptionType } from '@/components/ui';
-import { Options, useModal } from '@/components/ui';
+import { colors, Options, useModal } from '@/components/ui';
+import { Theme as ThemeIcon } from '@/components/ui/icons';
 import type { ColorSchemeType } from '@/lib';
 import { translate, useSelectedTheme } from '@/lib';
 
@@ -33,10 +35,15 @@ export const ThemeItem = () => {
     [selectedTheme, themes]
   );
 
+  const colorScheme = useColorScheme();
+  const iconColor =
+    colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];
+
   return (
     <>
       <Item
         text="settings.theme.title"
+        icon={<ThemeIcon color={iconColor} />}
         value={theme?.label}
         onPress={modal.present}
       />

@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { useColorScheme } from 'react-native';
 
 import type { OptionType } from '@/components/ui';
-import { Options, useModal } from '@/components/ui';
+import { colors, Options, useModal } from '@/components/ui';
+import { Language as LanguageIcon } from '@/components/ui/icons';
 import { useSelectedLanguage } from '@/lib';
 import { translate } from '@/lib';
 import type { Language } from '@/lib/i18n/resources';
@@ -32,10 +34,14 @@ export const LanguageItem = () => {
     [language, langs]
   );
 
+  const colorScheme = useColorScheme();
+  const iconColor =
+    colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];
   return (
     <>
       <Item
         text="settings.language"
+        icon={<LanguageIcon color={iconColor} />}
         value={selectedLanguage?.label}
         onPress={modal.present}
       />
