@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import * as z from 'zod';
 
-import { Button, ControlledInput, Text, View } from '@/components/ui';
+import { ControlledInput, Text, View } from '@/components/ui';
+import { Button, ButtonText } from '@/components/ui/button';
 
 const schema = z.object({
   name: z.string().optional(),
@@ -74,10 +75,12 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
           secureTextEntry={true}
         />
         <Button
-          testID="login-button"
-          label="Login"
+          className="my-2 flex flex-row items-center justify-center rounded-md px-4"
           onPress={handleSubmit(onSubmit)}
-        />
+          testID="login-button"
+        >
+          <ButtonText className="ml-2 text-sm font-medium">Login</ButtonText>
+        </Button>
       </View>
     </KeyboardAvoidingView>
   );
