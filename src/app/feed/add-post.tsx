@@ -64,7 +64,7 @@ export default function AddPost() {
           testID="body-input"
         />
         <Button
-          className="p-3"
+          className="bg-cyan-600 p-3"
           onPress={handleSubmit(onSubmit)}
           testID="add-post-button"
         >

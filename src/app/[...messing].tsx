@@ -1,6 +1,7 @@
 import { Link, Stack } from 'expo-router';
 
-import { Text, View } from '@/components/ui';
+import { View } from '@/components/ui';
+import { Text } from '@/components/ui/text';
 
 export default function NotFoundScreen() {
   return (
