@@ -6,12 +6,8 @@ import { showMessage } from 'react-native-flash-message';
 import { z } from 'zod';
 
 import { useAddPost } from '@/api';
-import {
-  Button,
-  ControlledInput,
-  showErrorMessage,
-  View,
-} from '@/components/ui';
+import { ControlledInput, showErrorMessage, View } from '@/components/ui';
+import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 
 const schema = z.object({
   title: z.string().min(10),
@@ -68,11 +64,13 @@ export default function AddPost() {
           testID="body-input"
         />
         <Button
-          label="Add Post"
-          loading={isPending}
+          className="bg-cyan-600 p-3"
           onPress={handleSubmit(onSubmit)}
           testID="add-post-button"
-        />
+        >
+          {isPending && <ButtonSpinner className="text-gray-400" />}
+          <ButtonText className="ml-2 text-sm font-medium">Add Post</ButtonText>
+        </Button>
       </View>
     </>
   );

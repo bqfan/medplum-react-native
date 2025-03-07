@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { Pressable, Text, View } from '@/components/ui';
+import { Pressable, View } from '@/components/ui';
 import { ArrowRight } from '@/components/ui/icons';
+import { Text } from '@/components/ui/text';
 import type { TxKeyPath } from '@/lib';
 
 type ItemProps = {

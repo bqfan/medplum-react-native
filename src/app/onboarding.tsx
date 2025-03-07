@@ -2,13 +2,9 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { Dimensions, Image } from 'react-native';
 
-import {
-  Button,
-  FocusAwareStatusBar,
-  SafeAreaView,
-  Text,
-  View,
-} from '@/components/ui';
+import { FocusAwareStatusBar, SafeAreaView, View } from '@/components/ui';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
 import { useIsFirstTime } from '@/lib/hooks';
 
 const { width } = Dimensions.get('window');
@@ -52,12 +48,16 @@ export default function Onboarding() {
       </View>
       <SafeAreaView className="mt-6">
         <Button
-          label="Let's Get Started "
+          className="my-12 flex flex-row items-center justify-center rounded-md bg-cyan-600 px-12 "
           onPress={() => {
             setIsFirstTime(false);
             router.replace('/login');
           }}
-        />
+        >
+          <ButtonText className="font-inter text-sm font-semibold">
+            Let's Get Started
+          </ButtonText>
+        </Button>
       </SafeAreaView>
     </View>
   );
