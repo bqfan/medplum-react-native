@@ -52,6 +52,21 @@
         "EXPO_NO_DOTENV": "1"
       }
     },
+    "preview": {
+      "channel": "preview",
+      "distribution": "internal",
+      "pnpm": "9.12.3",
+      "ios": {
+        "image": "latest"
+      },
+      "android": {
+        "image": "latest"
+      },
+      "env": {
+        "APP_ENV": "development",
+        "EXPO_NO_DOTENV": "1"
+      }
+    },
     "simulator": {
       "pnpm": "9.12.3",
       "ios": {

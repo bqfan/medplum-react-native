@@ -71,7 +71,7 @@ const withEnvSuffix = (name) => {
  */
 
 const client = z.object({
-  APP_ENV: z.enum(['development', 'staging', 'production']),
+  APP_ENV: z.enum(['development', 'staging', 'production', 'preview']),
   NAME: z.string(),
   SCHEME: z.string(),
   BUNDLE_ID: z.string(),
