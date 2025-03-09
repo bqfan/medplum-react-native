@@ -124,10 +124,10 @@ const Option = React.memo(
     return (
       <Pressable
         disabled={selected} // Simplified (if "selected" is boolean)
-        className={`flex-row items-center border-b border-neutral-300 px-3 py-2 ${
+        className={`flex-row items-center border-b border-neutral-300 px-3 py-2 dark:border-neutral-100 ${
           selected
-            ? 'bg-neutral-300 dark:bg-neutral-600'
-            : 'bg-white dark:bg-neutral-800'
+            ? 'bg-white dark:bg-neutral-800'
+            : 'bg-neutral-300 dark:bg-neutral-600'
         }`}
         {...props}
       >
