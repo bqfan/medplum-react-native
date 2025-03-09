@@ -1,17 +1,34 @@
+import { getLocales } from 'expo-localization';
 import * as React from 'react';
 import { useColorScheme } from 'react-native';
 
 import type { OptionType } from '@/components/ui';
 import { colors, Options, useModal } from '@/components/ui';
 import { Language as LanguageIcon } from '@/components/ui/icons';
-import { useSelectedLanguage } from '@/lib';
+import { useDefaultLanguage, useSelectedLanguage } from '@/lib';
 import { translate } from '@/lib';
-import type { Language } from '@/lib/i18n/resources';
+import { type Language, resources } from '@/lib/i18n/resources';
 
 import { Item } from './item';
 
 export const LanguageItem = () => {
+  const languageCode = getLocales()[0].languageCode;
   const { language, setLanguage } = useSelectedLanguage();
+  const { setDefaultLanguage } = useDefaultLanguage();
+
+  const defalt_language =
+    language === undefined
+      ? languageCode && Object.keys(resources).includes(languageCode)
+        ? languageCode
+        : 'en'
+      : language;
+
+  React.useEffect(() => {
+    if (language === undefined) {
+      setDefaultLanguage(defalt_language as Language);
+    }
+  }, [defalt_language, language, setDefaultLanguage]);
+
   const modal = useModal();
   const onSelect = React.useCallback(
     (option: OptionType) => {
