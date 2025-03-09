@@ -5,11 +5,13 @@
   "settings": {
     "about": "About",
     "app_name": "App Name",
-    "arabic": "Arabic",
-    "english": "English",
     "generale": "General",
     "github": "Github",
-    "language": "Language",
+    "language": {
+      "arabic": "Arabic",
+      "english": "English",
+      "title": "Language"
+    },
     "links": "Links",
     "logout": "Logout",
     "more": "More",

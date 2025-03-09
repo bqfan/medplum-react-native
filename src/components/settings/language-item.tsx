@@ -5,7 +5,7 @@ import { useColorScheme } from 'react-native';
 import type { OptionType } from '@/components/ui';
 import { colors, Options, useModal } from '@/components/ui';
 import { Language as LanguageIcon } from '@/components/ui/icons';
-import { useDefaultLanguage, useSelectedLanguage } from '@/lib';
+import { useSelectedLanguage, useSystemLanguage } from '@/lib';
 import { translate } from '@/lib';
 import { type Language, resources } from '@/lib/i18n/resources';
 
@@ -14,9 +14,9 @@ import { Item } from './item';
 export const LanguageItem = () => {
   const languageCode = getLocales()[0].languageCode;
   const { language, setLanguage } = useSelectedLanguage();
-  const { setDefaultLanguage } = useDefaultLanguage();
+  const { setSystemLanguage } = useSystemLanguage();
 
-  const defalt_language =
+  const system_language =
     language === undefined
       ? languageCode && Object.keys(resources).includes(languageCode)
         ? languageCode
@@ -25,9 +25,9 @@ export const LanguageItem = () => {
 
   React.useEffect(() => {
     if (language === undefined) {
-      setDefaultLanguage(defalt_language as Language);
+      setSystemLanguage(system_language as Language);
     }
-  }, [defalt_language, language, setDefaultLanguage]);
+  }, [system_language, language, setSystemLanguage]);
 
   const modal = useModal();
   const onSelect = React.useCallback(
@@ -40,8 +40,8 @@ export const LanguageItem = () => {
 
   const langs = React.useMemo(
     () => [
-      { label: translate('settings.english'), value: 'en' },
-      { label: translate('settings.arabic'), value: 'ar' },
+      { label: translate('settings.language.english'), value: 'en' },
+      { label: translate('settings.language.arabic'), value: 'ar' },
     ],
     []
   );
@@ -57,7 +57,7 @@ export const LanguageItem = () => {
   return (
     <>
       <Item
-        text="settings.language"
+        text="settings.language.title"
         icon={<LanguageIcon color={iconColor} />}
         value={selectedLanguage?.label}
         onPress={modal.present}
