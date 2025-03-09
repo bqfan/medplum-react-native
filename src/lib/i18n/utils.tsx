@@ -58,3 +58,16 @@ export const useSelectedLanguage = () => {
 
   return { language: language as Language, setLanguage };
 };
+
+export const useDefaultLanguage = () => {
+  const [language, setLang] = useMMKVString(LOCAL);
+
+  const setDefaultLanguage = useCallback(
+    (lang: Language) => {
+      setLang(lang);
+    },
+    [setLang]
+  );
+
+  return { language: language as Language, setDefaultLanguage };
+};
