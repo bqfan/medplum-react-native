@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Env } from '@env';
+import * as WebBrowser from 'expo-web-browser';
 import { useColorScheme } from 'nativewind';
 
 import { Item } from '@/components/settings/item';
@@ -11,11 +12,24 @@ import { Github, Rate, Share, Support, Website } from '@/components/ui/icons';
 import { Text } from '@/components/ui/text';
 import { translate, useAuth } from '@/lib';
 
+/* eslint-disable max-lines-per-function */
 export default function Settings() {
   const signOut = useAuth.use.signOut();
   const { colorScheme } = useColorScheme();
   const iconColor =
     colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];
+
+  interface OpenWebsiteProps {
+    url: string;
+  }
+
+  const openWebsite = async ({ url }: OpenWebsiteProps): Promise<void> => {
+    try {
+      await WebBrowser.openBrowserAsync(url);
+    } catch (error) {
+      console.error('Error opening browser:', error);
+    }
+  };
   return (
     <>
       <FocusAwareStatusBar />
@@ -59,12 +73,14 @@ export default function Settings() {
             <Item
               text="settings.github"
               icon={<Github color={iconColor} />}
-              onPress={() => {}}
+              onPress={() =>
+                openWebsite({ url: 'https://github.com/bqfan/fhir-app' })
+              }
             />
             <Item
               text="settings.website"
               icon={<Website color={iconColor} />}
-              onPress={() => {}}
+              onPress={() => openWebsite({ url: 'https://hl7.org/fhir' })}
             />
           </ItemsContainer>
 
