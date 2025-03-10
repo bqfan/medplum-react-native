@@ -1,46 +1,23 @@
-// import { useRouter } from 'expo-router';
-// import React from 'react';
-
-// import type { LoginFormProps } from '@/components/login-form';
-// import { LoginForm } from '@/components/login-form';
-// import { FocusAwareStatusBar } from '@/components/ui';
-// import { useAuth } from '@/lib';
-
-// export default function Login() {
-//   const router = useRouter();
-//   const signIn = useAuth.use.signIn();
-
-//   const onSubmit: LoginFormProps['onSubmit'] = (data) => {
-//     console.log(data);
-//     signIn({ access: 'access-token', refresh: 'refresh-token' });
-//     router.push('/');
-//   };
-//   return (
-//     <>
-//       <FocusAwareStatusBar />
-//       <LoginForm onSubmit={onSubmit} />
-//     </>
-//   );
-// }
-import type { LoginAuthenticationResponse } from '@medplum/core';
-import { getDisplayString } from '@medplum/core';
-import type { Patient } from '@medplum/fhirtypes';
+import {
+  getDisplayString,
+  type LoginAuthenticationResponse,
+} from '@medplum/core';
 import {
   useMedplum,
   useMedplumContext,
   useMedplumProfile,
-  useSubscription,
 } from '@medplum/react-hooks';
 import { StatusBar } from 'expo-status-bar';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
-  ScrollView,
+  SafeAreaView,
   StyleSheet,
   TextInput,
   View,
 } from 'react-native';
 
+import PatientsScreen from '@/components/patient-list';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 
@@ -51,8 +28,8 @@ export default function Login() {
   const { loading } = useMedplumContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [patients, setPatients] = useState<Patient[]>();
-  const [lastName, setLastName] = useState('');
+  // const [patients, setPatients] = useState<Patient[]>();
+  // const [lastName, setLastName] = useState('');
 
   function startLogin(): void {
     medplum
@@ -83,168 +60,102 @@ export default function Login() {
     medplum.signOut().catch(console.error);
   }
 
-  function createNewMary(): void {
-    medplum
-      .createResource<Patient>({
-        resourceType: 'Patient',
-        name: [
-          {
-            family: lastName !== '' ? lastName : 'Doe',
-            given: ['Mary'],
-          },
-        ],
-      })
-      .then((patient) => console.log('Patient created', patient))
-      .catch(console.error);
-    setLastName('');
-  }
-
-  function searchPatient(): void {
-    medplum
-      //.searchResources('Patient', 'name=Mary')
-      .search('Patient')
-      .then((response) =>
-        setPatients(response.entry?.map((e) => e.resource as Patient))
-      )
-      .catch(console.error);
-  }
-
-  // function searchForMary(): void {
-  //   medplum
-  //     .searchResources('Patient', 'name=Mary')
-  //     .then(setPatients)
-  //     .catch(console.error);
-  // }
-
   return (
-    <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <>
-          <Text style={styles.title}>Medplum React Native Example</Text>
-          {!profile ? (
-            <View style={styles.formWrapper}>
-              <View>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={(email) => setEmail(email)}
-                />
+    <SafeAreaView className="w-full flex-1 items-center justify-center">
+      <View style={styles.container}>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <>
+            <Text style={styles.title}>Medplum React Native Example</Text>
+            <Text style={styles.loginText}>
+              {profile && `Logged in as ${getDisplayString(profile)}`}
+            </Text>
+            {profile && (
+              <View style={{ flex: 1 }}>
+                <PatientsScreen medplum={medplum} />
               </View>
-              <View>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Password"
-                  placeholderTextColor="#003f5c"
-                  secureTextEntry={true}
-                  onChangeText={(password) => setPassword(password)}
-                />
-              </View>
-              <Button onPress={startLogin}>
-                <ButtonText>Sign in</ButtonText>
-              </Button>
-            </View>
-          ) : (
-            <View style={styles.authedWrapper}>
-              <Text style={styles.loginText}>
-                Logged in as {getDisplayString(profile)}
-              </Text>
-              <Button onPress={signOut}>
-                <ButtonText>Sign out</ButtonText>
-              </Button>
-              <View style={styles.marginTop10}>
-                <TextInput
-                  style={{ ...styles.input, marginTop: 10 }}
-                  placeholder="Mary's Last Name"
-                  placeholderTextColor="#003f5c"
-                  onChangeText={(lastName) => setLastName(lastName)}
-                  value={lastName}
-                />
-                <Button onPress={createNewMary}>
-                  <ButtonText>Create New Mary</ButtonText>
+            )}
+            {!profile ? (
+              <View style={styles.formWrapper}>
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(email) => setEmail(email)}
+                  />
+                </View>
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor="#003f5c"
+                    secureTextEntry={true}
+                    onChangeText={(password) => setPassword(password)}
+                  />
+                </View>
+                <Button onPress={startLogin}>
+                  <ButtonText>Sign in</ButtonText>
                 </Button>
-                <Button style={styles.marginTop10} onPress={searchPatient}>
-                  <ButtonText>Search Patient</ButtonText>
-                </Button>
-                <ScrollView style={styles.scrollView}>
-                  <View style={styles.marginTop10}>
-                    {patients &&
-                      (patients.length ? (
-                        patients.map((patient) => {
-                          const lastName = patient.name?.[0]?.family;
-                          const firstName = patient.name?.[0]?.given?.[0];
-                          return (
-                            <Text
-                              key={patient.id as string}
-                              style={styles.name}
-                            >
-                              {firstName} {lastName}
-                            </Text>
-                          );
-                        })
-                      ) : (
-                        <Text>No patients with first name "Mary" found.</Text>
-                      ))}
-                  </View>
-                </ScrollView>
               </View>
-              <NotificationsWidgit
-                title="New Marys created:"
-                criteria="Patient?name=Mary"
-              />
-            </View>
-          )}
-          <StatusBar style="auto" />
-        </>
-      )}
-    </View>
+            ) : (
+              <View style={styles.authedWrapper}>
+                <Button onPress={signOut}>
+                  <ButtonText>Sign out</ButtonText>
+                </Button>
+              </View>
+            )}
+            <StatusBar style="auto" />
+          </>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
-interface NotificationsWidgitProps {
-  title?: string;
-  criteria: string;
-}
+// interface NotificationsWidgitProps {
+//   title?: string;
+//   criteria: string;
+// }
 
-function NotificationsWidgit(props: NotificationsWidgitProps): JSX.Element {
-  const [notifications, setNotifications] = useState(0);
-  const [reconnecting, setReconnecting] = useState(false);
+// function NotificationsWidgit(props: NotificationsWidgitProps): JSX.Element {
+//   const [notifications, setNotifications] = useState(0);
+//   const [reconnecting, setReconnecting] = useState(false);
 
-  useSubscription(
-    props.criteria,
-    () => {
-      setNotifications(notifications + 1);
-    },
-    {
-      onWebSocketClose: useCallback(() => {
-        setReconnecting(true);
-      }, []),
-      onWebSocketOpen: useCallback(() => {
-        if (reconnecting) {
-          setReconnecting(false);
-        }
-      }, [reconnecting]),
-    }
-  );
+//   useSubscription(
+//     props.criteria,
+//     () => {
+//       setNotifications(notifications + 1);
+//     },
+//     {
+//       onWebSocketClose: useCallback(() => {
+//         setReconnecting(true);
+//       }, []),
+//       onWebSocketOpen: useCallback(() => {
+//         if (reconnecting) {
+//           setReconnecting(false);
+//         }
+//       }, [reconnecting]),
+//     }
+//   );
 
-  function clearNotifications(): void {
-    setNotifications(0);
-  }
+//   function clearNotifications(): void {
+//     setNotifications(0);
+//   }
 
-  return (
-    <View style={styles.marginTop10}>
-      <Text>
-        {props.title ?? 'Notifications:'} {notifications}
-      </Text>
-      <Text>Reconnecting: {reconnecting.toString()}</Text>
-      <Button onPress={clearNotifications}>
-        <ButtonText>Clear</ButtonText>
-      </Button>
-    </View>
-  );
-}
+//   return (
+//     <View style={styles.marginTop10}>
+//       <Text>
+//         {props.title ?? 'Notifications:'} {notifications}
+//       </Text>
+//       <Text>Reconnecting: {reconnecting.toString()}</Text>
+//       <Button onPress={clearNotifications}>
+//         <ButtonText>Clear</ButtonText>
+//       </Button>
+//     </View>
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -266,8 +177,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   authedWrapper: {
-    marginTop: 10,
-    height: '60%',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   input: {
     minWidth: 200,
