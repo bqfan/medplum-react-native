@@ -65,6 +65,7 @@
     "expo-splash-screen": "~0.29.22",
     "expo-status-bar": "~2.0.1",
     "expo-system-ui": "~4.0.8",
+    "expo-web-browser": "^14.0.2",
     "i18next": "^23.14.0",
     "lodash.memoize": "^4.1.2",
     "moti": "^0.29.0",
