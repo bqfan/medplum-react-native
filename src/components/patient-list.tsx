@@ -73,7 +73,7 @@ const PatientList = () => {
               onPress={handlePreviousPage}
               disabled={currentPage === 1 || loading}
             />
-            <Text style={styles.pageNumber}>Page {currentPage}</Text>
+            <Text className="dark:text-neutral-100">Page {currentPage}</Text>
             <Button
               title="Next"
               onPress={handleNextPage}

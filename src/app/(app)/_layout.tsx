@@ -1,14 +1,12 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
+import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { Pressable } from '@/components/ui';
 import {
-  Patients as PatientsIcon,
+  CrowdPatient as CrowdPatientIcon,
   Settings as SettingsIcon,
   Style as StyleIcon,
 } from '@/components/ui/icons';
-import { Text } from '@/components/ui/text';
 import { useAuth, useIsFirstTime } from '@/lib';
 
 export default function TabLayout() {
@@ -37,8 +35,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Patients',
-          tabBarIcon: ({ color }) => <PatientsIcon color={color} />,
-          headerRight: () => <CreateNewPostLink />,
+          tabBarIcon: ({ color }) => <CrowdPatientIcon color={color} />,
           tabBarButtonTestID: 'patients-tab',
         }}
       />
@@ -64,13 +61,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const CreateNewPostLink = () => {
-  return (
-    <Link href="/feed/add-post" asChild>
-      <Pressable>
-        <Text className="px-3 text-primary-300">Create</Text>
-      </Pressable>
-    </Link>
-  );
-};
