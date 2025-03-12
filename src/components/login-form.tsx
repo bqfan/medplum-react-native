@@ -52,14 +52,6 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
             and password to sign in and try it out.
           </Text>
         </View>
-
-        <ControlledInput
-          testID="name"
-          control={control}
-          name="name"
-          label="Name"
-        />
-
         <ControlledInput
           testID="email-input"
           control={control}

@@ -9,7 +9,7 @@ env:
 ---
 - launchApp
 - runFlow: ../utils/onboarding-and-login.yaml
-- assertVisible: 'Feed'
+- assertVisible: 'Patients'
 - assertVisible: 'Create'
 - tapOn: 'Create'
 - assertVisible: 'Add Post'

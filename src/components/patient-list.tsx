@@ -1,4 +1,4 @@
-import { type MedplumClient } from '@medplum/core';
+import { useMedplum } from '@medplum/react-hooks';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -9,16 +9,13 @@ import {
   View,
 } from 'react-native';
 
-interface PatientsScreenProps {
-  medplum: MedplumClient;
-}
-
 /* eslint-disable max-lines-per-function */
-const PatientsScreen = ({ medplum }: PatientsScreenProps) => {
+const PatientList = () => {
   const [patients, setPatients] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [patientsPerPage] = useState(10);
+  const medplum = useMedplum();
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -124,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PatientsScreen;
+export default PatientList;

@@ -6,7 +6,7 @@ env:
 ---
 - launchApp
 - runFlow: ../utils/onboarding-and-login.yaml
-- assertVisible: 'Feed'
+- assertVisible: 'Patients'
 - assertVisible:
     id: 'style-tab'
 - tapOn:

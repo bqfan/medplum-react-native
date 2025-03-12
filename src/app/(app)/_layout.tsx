@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import { Pressable } from '@/components/ui';
 import {
-  Feed as FeedIcon,
+  Patients as PatientsIcon,
   Settings as SettingsIcon,
   Style as StyleIcon,
 } from '@/components/ui/icons';
@@ -36,10 +36,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
+          title: 'Patients',
+          tabBarIcon: ({ color }) => <PatientsIcon color={color} />,
           headerRight: () => <CreateNewPostLink />,
-          tabBarButtonTestID: 'feed-tab',
+          tabBarButtonTestID: 'patients-tab',
         }}
       />
 

@@ -32,4 +32,4 @@ env:
 - runFlow: ../utils/hide-keyboard.yaml
 - tapOn:
     id: 'login-button'
-- assertVisible: 'Feed'
+- assertVisible: 'Patients'

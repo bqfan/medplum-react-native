@@ -12,7 +12,7 @@ import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
-import { medplum_client } from '@/api';
+import { APIProvider, medplum_client } from '@/api';
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { hydrateAuth, loadSelectedTheme, useSelectedTheme } from '@/lib';
 import { useThemeConfig } from '@/lib/use-theme-config';
@@ -57,12 +57,14 @@ function Providers({ children }: { children: React.ReactNode }) {
       <KeyboardProvider>
         <ThemeProvider value={theme}>
           <GluestackUIProvider mode={selectedTheme}>
-            <MedplumProvider medplum={medplum_client}>
-              <BottomSheetModalProvider>
-                {children}
-                <FlashMessage position="top" />
-              </BottomSheetModalProvider>
-            </MedplumProvider>
+            <APIProvider>
+              <MedplumProvider medplum={medplum_client}>
+                <BottomSheetModalProvider>
+                  {children}
+                  <FlashMessage position="top" />
+                </BottomSheetModalProvider>
+              </MedplumProvider>
+            </APIProvider>
           </GluestackUIProvider>
         </ThemeProvider>
       </KeyboardProvider>
