@@ -8,7 +8,12 @@ import { Text } from '@/components/ui/text';
 /* eslint-disable max-lines-per-function */
 const PatientList = () => {
   const [patients, setPatients] = useState<
-    { id: string; name?: { given?: string[]; family?: string }[] }[]
+    {
+      id: string;
+      name?: { given?: string[]; family?: string }[];
+      gender: string;
+      birthDate: string;
+    }[]
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -23,7 +28,14 @@ const PatientList = () => {
           _count: patientsPerPage,
           _offset: (currentPage - 1) * patientsPerPage,
         });
-        setPatients(response);
+        setPatients(
+          response.map((patient: any) => ({
+            id: patient.id,
+            name: patient.name,
+            gender: patient.gender || 'unknown',
+            birthDate: patient.birthDate || 'unknown',
+          }))
+        );
       } catch (error) {
         console.error('Error fetching patients:', error);
       } finally {
@@ -37,11 +49,17 @@ const PatientList = () => {
   const renderPatientItem = ({
     item,
   }: {
-    item: { id: string; name?: { given?: string[]; family?: string }[] };
+    item: {
+      id: string;
+      name?: { given?: string[]; family?: string }[];
+      gender: string;
+      birthDate: string;
+    };
   }) => (
     <View className="mb-2 rounded-lg bg-white p-2 shadow-sm">
       <Text className="text-sm dark:text-neutral-600">
-        {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
+        {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}{' '}
+        {item.gender} {item.birthDate}
       </Text>
       {/* <Text style={styles.patientId}>ID: {item.id}</Text> */}
     </View>
