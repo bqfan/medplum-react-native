@@ -1,7 +1,7 @@
 import { useMedplum } from '@medplum/react-hooks';
 import { FlashList } from '@shopify/flash-list';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
 import { Button, ButtonText } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -20,16 +20,36 @@ const PatientList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [patientsPerPage] = useState(20);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const medplum = useMedplum();
+
+  // Debounce search term
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setCurrentPage(1); // Reset to first page when search changes
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
 
   useEffect(() => {
     const fetchPatients = async () => {
       setLoading(true);
       try {
-        const response = await medplum.searchResources('Patient', {
+        const params: Record<string, any> = {
           _count: patientsPerPage,
           _offset: (currentPage - 1) * patientsPerPage,
-        });
+        };
+
+        if (debouncedSearchTerm) {
+          params.name = debouncedSearchTerm;
+        }
+
+        const response = await medplum.searchResources('Patient', params);
         setPatients(
           response.map((patient: any) => ({
             id: patient.id,
@@ -46,7 +66,7 @@ const PatientList = () => {
     };
 
     fetchPatients();
-  }, [currentPage, patientsPerPage, medplum]);
+  }, [currentPage, patientsPerPage, medplum, debouncedSearchTerm]);
 
   const renderPatientItem = ({
     item,
@@ -63,8 +83,8 @@ const PatientList = () => {
     <View
       className={`flex-row items-center p-3 ${
         index % 2 === 0
-          ? 'bg-gray-100 dark:bg-gray-800' // Light gray for light mode, darker gray for dark mode
-          : 'bg-gray-200 dark:bg-gray-700' // Darker gray for light mode, even darker for dark mode
+          ? 'bg-gray-100 dark:bg-gray-800'
+          : 'bg-gray-200 dark:bg-gray-700'
       }`}
     >
       <Text className="flex-[2] text-sm text-gray-700 dark:text-gray-300">
@@ -91,6 +111,15 @@ const PatientList = () => {
 
   return (
     <View className="flex-1 bg-white p-4 dark:bg-black">
+      {/* Search Input */}
+      <TextInput
+        className="mb-4 rounded-lg border border-gray-300 bg-white p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+        placeholder="Search by name..."
+        placeholderTextColor="#6b7280"
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+      />
+
       {loading ? (
         <View className="items-center py-4">
           <Spinner
@@ -118,7 +147,15 @@ const PatientList = () => {
             data={patients}
             renderItem={renderPatientItem}
             keyExtractor={(item) => item.id}
-            estimatedItemSize={50} // Adjust based on row height
+            estimatedItemSize={50}
+            ListEmptyComponent={
+              !loading && (
+                <Text className="p-4 text-center text-gray-500 dark:text-gray-400">
+                  No patients found
+                  {debouncedSearchTerm && ` matching "${debouncedSearchTerm}"`}
+                </Text>
+              )
+            }
           />
 
           {/* Pagination Controls */}
