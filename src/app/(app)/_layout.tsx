@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
+import { useMedplum } from '@medplum/react-hooks';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
@@ -15,6 +16,8 @@ export default function TabLayout() {
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
+  const medplum = useMedplum();
+
   useEffect(() => {
     if (status !== 'idle') {
       setTimeout(() => {
@@ -26,7 +29,7 @@ export default function TabLayout() {
   if (isFirstTime) {
     return <Redirect href="/onboarding" />;
   }
-  if (status === 'signOut') {
+  if (!medplum.isAuthenticated()) {
     return <Redirect href="/login" />;
   }
   return (
