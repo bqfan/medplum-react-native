@@ -28,17 +28,16 @@ module.exports = {
     900: '#171717',
   },
   primary: {
-    50: '#ECFEFF', // Lightest cyan
-    100: '#CFFAFE',
-    200: '#A5F3FC',
-    300: '#67E8F9',
-    400: '#22D3EE', // Light cyan
-    500: '#06B6D4', // Primary cyan
-    600: '#0891B2', // Deeper cyan
-    700: '#0E7490',
-    800: '#155E75',
-    900: '#164E63',
-    950: '#083344',
+    50: '#e6fffa', // Lightest teal
+    100: '#b2f5ea',
+    200: '#81e6d9',
+    300: '#4fd1c5',
+    400: '#38b2ac', // Light teal
+    500: '#319795', // Primary teal
+    600: '#2c7a7b', // Deeper teal
+    700: '#285e61',
+    800: '#234e52',
+    900: '#1d4044',
   },
   success: {
     50: '#F0FDF4',

@@ -1,6 +1,7 @@
 import { useMedplum } from '@medplum/react-hooks';
+import { FlashList } from '@shopify/flash-list';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 import { Button, ButtonText } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
@@ -48,6 +49,7 @@ const PatientList = () => {
 
   const renderPatientItem = ({
     item,
+    index,
   }: {
     item: {
       id: string;
@@ -55,13 +57,24 @@ const PatientList = () => {
       gender: string;
       birthDate: string;
     };
+    index: number;
   }) => (
-    <View className="mb-2 rounded-lg bg-white p-2 shadow-sm">
-      <Text className="text-sm dark:text-neutral-600">
-        {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}{' '}
-        {item.gender} {item.birthDate}
+    <View
+      className={`flex-row items-center p-3 ${
+        index % 2 === 0
+          ? 'bg-gray-100 dark:bg-gray-800' // Light gray for light mode, darker gray for dark mode
+          : 'bg-gray-200 dark:bg-gray-700' // Darker gray for light mode, even darker for dark mode
+      }`}
+    >
+      <Text className="flex-[2] text-sm text-gray-700 dark:text-gray-300">
+        {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
       </Text>
-      {/* <Text style={styles.patientId}>ID: {item.id}</Text> */}
+      <Text className="flex-1 text-sm text-gray-700 dark:text-gray-300">
+        {item.gender}
+      </Text>
+      <Text className="flex-1 text-sm text-gray-700 dark:text-gray-300">
+        {item.birthDate}
+      </Text>
     </View>
   );
 
@@ -76,17 +89,33 @@ const PatientList = () => {
   };
 
   return (
-    <View className="flex-1 p-4">
+    <View className="flex-1 bg-white p-4 dark:bg-black">
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <>
-          <FlatList
+          {/* Table Header */}
+          <View className="flex-row items-center bg-gray-300 p-3 dark:bg-gray-900">
+            <Text className="flex-[2] text-base font-bold text-gray-900 dark:text-gray-100">
+              Name
+            </Text>
+            <Text className="flex-1 text-base font-bold text-gray-900 dark:text-gray-100">
+              Gender
+            </Text>
+            <Text className="flex-1 text-base font-bold text-gray-900 dark:text-gray-100">
+              Birthdate
+            </Text>
+          </View>
+
+          {/* FlashList for Performance */}
+          <FlashList
             data={patients}
             renderItem={renderPatientItem}
             keyExtractor={(item) => item.id}
-            className="pb-4"
+            estimatedItemSize={50} // Adjust based on row height
           />
+
+          {/* Pagination Controls */}
           <View className="flex-row items-center justify-between py-4">
             <Button
               onPress={handlePreviousPage}
@@ -94,7 +123,9 @@ const PatientList = () => {
             >
               <ButtonText>Previous</ButtonText>
             </Button>
-            <Text className="dark:text-neutral-100">Page {currentPage}</Text>
+            <Text className="text-gray-900 dark:text-gray-100">
+              Page {currentPage}
+            </Text>
             <Button
               onPress={handleNextPage}
               isDisabled={patients.length < patientsPerPage || loading}

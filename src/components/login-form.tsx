@@ -67,7 +67,7 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
           secureTextEntry={true}
         />
         <Button
-          className="my-2 flex flex-row items-center justify-center rounded-md bg-cyan-600 px-4"
+          className="my-2 flex flex-row items-center justify-center rounded-md px-4"
           onPress={handleSubmit(onSubmit)}
           testID="login-button"
         >
