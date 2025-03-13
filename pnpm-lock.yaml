@@ -23,6 +23,9 @@ importers:
       '@gluestack-ui/overlay':
         specifier: ^0.1.21
         version: 0.1.21(react-dom@18.3.1(react@18.3.1))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
+      '@gluestack-ui/spinner':
+        specifier: ^0.1.15
+        version: 0.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@gluestack-ui/toast':
         specifier: ^1.0.9
         version: 1.0.9(react-dom@18.3.1(react@18.3.1))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
@@ -37,7 +40,7 @@ importers:
         version: 4.0.3
       '@medplum/expo-polyfills':
         specifier: ^4.0.3
-        version: 4.0.3(3ycfdacpdid654xoye4ymncfkm)
+        version: 4.0.3(67ec16d4bd97b5f4c1458fa8c306550b)
       '@medplum/fhirtypes':
         specifier: ^4.0.3
         version: 4.0.3
@@ -62,6 +65,9 @@ importers:
       expo-constants:
         specifier: ~17.0.7
         version: 17.0.7(expo@52.0.37(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1)))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))
+      expo-crypto:
+        specifier: ^14.0.2
+        version: 14.0.2(expo@52.0.37(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1)))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))
       expo-dev-client:
         specifier: ~5.0.12
         version: 5.0.12(expo@52.0.37(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1)))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))
@@ -79,7 +85,7 @@ importers:
         version: 16.0.1(expo@52.0.37(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1)))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react@18.3.1)
       expo-router:
         specifier: ~4.0.17
-        version: 4.0.17(35uivciv4po5vn6m7lfdisczwm)
+        version: 4.0.17(1780f6a58d850bb1d088e2857cce2ca7)
       expo-splash-screen:
         specifier: ~0.29.22
         version: 0.29.22(expo@52.0.37(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.1(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1)))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))
@@ -1309,6 +1315,12 @@ packages:
 
   '@gluestack-ui/react-native-aria@0.1.7':
     resolution: {integrity: sha512-mdK/M6RQafAYiHyJnDNjaE9+ttr9eg48f2InmO3rvcrjsdaLcu/vwHlwrO9N3xYcb3wb9z2+YZ4OIgtymFNTOw==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+
+  '@gluestack-ui/spinner@0.1.15':
+    resolution: {integrity: sha512-jkXOGhna05HM2tcPKbA+t+vqcVRgRowwC6ES0A9kY5fcuURH1V41UFx/YWyHdSsHwmWlIoCCdWycF78UbNVdPg==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
@@ -9361,6 +9373,11 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
+  '@gluestack-ui/spinner@0.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@gluestack-ui/toast@1.0.9(react-dom@18.3.1(react@18.3.1))(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@gluestack-ui/hooks': 0.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9871,7 +9888,7 @@ snapshots:
 
   '@medplum/core@4.0.3': {}
 
-  '@medplum/expo-polyfills@4.0.3(3ycfdacpdid654xoye4ymncfkm)':
+  '@medplum/expo-polyfills@4.0.3(67ec16d4bd97b5f4c1458fa8c306550b)':
     dependencies:
       '@medplum/core': 4.0.3
       base-64: 1.0.0
@@ -12654,7 +12671,7 @@ snapshots:
     dependencies:
       invariant: 2.2.4
 
-  expo-router@4.0.17(35uivciv4po5vn6m7lfdisczwm):
+  expo-router@4.0.17(1780f6a58d850bb1d088e2857cce2ca7):
     dependencies:
       '@expo/metro-runtime': 4.0.1(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))
       '@expo/server': 0.5.1(typescript@5.3.3)

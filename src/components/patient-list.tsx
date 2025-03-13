@@ -1,9 +1,10 @@
 import { useMedplum } from '@medplum/react-hooks';
 import { FlashList } from '@shopify/flash-list';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 import { Button, ButtonText } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 
 /* eslint-disable max-lines-per-function */
@@ -91,7 +92,12 @@ const PatientList = () => {
   return (
     <View className="flex-1 bg-white p-4 dark:bg-black">
       {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <View className="items-center py-4">
+          <Spinner
+            size="small"
+            className="size-8 text-gray-500 dark:text-gray-400"
+          />
+        </View>
       ) : (
         <>
           {/* Table Header */}
