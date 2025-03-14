@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
-import type { SubmitHandler } from 'react-hook-form';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import * as z from 'zod';
@@ -24,14 +23,33 @@ const schema = z.object({
 
 export type FormType = z.infer<typeof schema>;
 
+export type LoginFormValues = z.infer<typeof schema>;
+
 export type LoginFormProps = {
-  onSubmit?: SubmitHandler<FormType>;
+  onSubmit: (values: LoginFormValues) => Promise<void>;
+  emailError?: string;
+  passwordError?: string;
 };
 
-export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
-  const { handleSubmit, control } = useForm<FormType>({
+export const LoginForm = ({
+  onSubmit,
+  emailError,
+  passwordError,
+}: LoginFormProps) => {
+  const { control, handleSubmit, setError } = useForm<LoginFormValues>({
     resolver: zodResolver(schema),
   });
+
+  // Set server errors in form
+  useEffect(() => {
+    if (emailError) {
+      setError('email', { message: emailError });
+    }
+    if (passwordError) {
+      setError('password', { message: passwordError });
+    }
+  }, [emailError, passwordError, setError]);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -57,6 +75,7 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
           control={control}
           name="email"
           label="Email"
+          error={emailError}
         />
         <ControlledInput
           testID="password-input"
@@ -65,6 +84,7 @@ export const LoginForm = ({ onSubmit = () => {} }: LoginFormProps) => {
           label="Password"
           placeholder="***"
           secureTextEntry={true}
+          error={passwordError}
         />
         <Button
           className="my-2 flex flex-row items-center justify-center rounded-md px-4"

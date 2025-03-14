@@ -3,29 +3,48 @@ import { useMedplum } from '@medplum/react-hooks';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 
-import type { LoginFormProps } from '@/components/login-form';
+import type { LoginFormValues } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
 import { FocusAwareStatusBar } from '@/components/ui';
 import { useAuth } from '@/lib';
 
+/* eslint-disable max-lines-per-function */
 export default function Login() {
   const medplum = useMedplum();
   const router = useRouter();
   const signIn = useAuth.use.signIn();
   const [_, setError] = useState<string | null>(null); // Add error state
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  const onSubmit: LoginFormProps['onSubmit'] = (data) => {
-    setError(null); // Reset error state on new submission
-    console.log('Login attempt with:', data);
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      await medplum
+        .startLogin({
+          email: values.email,
+          password: values.password,
+        })
+        .then(handleAuthResponse);
+    } catch (error) {
+      // Proper error handling
+      console.error('Login failed:', error);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Login failed';
 
-    medplum
-      .startLogin({ email: data.email, password: data.password })
-      .then(handleAuthResponse)
-      .catch((error) => {
-        // Proper error handling
-        console.error('Login failed:', error);
-        setError(getErrorMessage(error)); // Set user-friendly error
-      });
+      // Reset errors
+      setEmailError('');
+      setPasswordError('');
+
+      // Map server errors
+      if (errorMessage.includes('User not found')) {
+        setEmailError(errorMessage);
+      } else if (
+        errorMessage.includes('Invalid password') ||
+        errorMessage.includes('Email or password')
+      ) {
+        setPasswordError(errorMessage);
+      }
+    }
   };
 
   function handleAuthResponse(response: LoginAuthenticationResponse): void {
@@ -56,21 +75,14 @@ export default function Login() {
     }
   }
 
-  // Helper function to extract error message
-  const getErrorMessage = (error: unknown): string => {
-    if (error instanceof Error) {
-      return error.message;
-    }
-    if (typeof error === 'string') {
-      return error;
-    }
-    return 'An unknown error occurred';
-  };
-
   return (
     <>
       <FocusAwareStatusBar />
-      <LoginForm onSubmit={onSubmit} />
+      <LoginForm
+        onSubmit={onSubmit}
+        emailError={emailError}
+        passwordError={passwordError}
+      />
     </>
   );
 }
