@@ -13,8 +13,8 @@ const PatientList = () => {
     {
       id: string;
       name?: { given?: string[]; family?: string }[];
-      gender: string;
       birthDate: string;
+      ssn: string;
     }[]
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,8 +54,11 @@ const PatientList = () => {
           response.map((patient: any) => ({
             id: patient.id,
             name: patient.name,
-            gender: patient.gender || 'unknown',
-            birthDate: patient.birthDate || 'unknown',
+            birthDate: patient.birthDate || 'N/A',
+            ssn:
+              patient.identifier?.find(
+                (id: any) => id.system === 'http://hl7.org/fhir/sid/us-ssn'
+              )?.value || 'N/A', // Add SSN extraction
           }))
         );
       } catch (error) {
@@ -75,8 +78,8 @@ const PatientList = () => {
     item: {
       id: string;
       name?: { given?: string[]; family?: string }[];
-      gender: string;
       birthDate: string;
+      ssn: string;
     };
     index: number;
   }) => (
@@ -91,7 +94,7 @@ const PatientList = () => {
         {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
       </Text>
       <Text className="flex-1 text-sm text-gray-700 dark:text-gray-300">
-        {item.gender}
+        {item.ssn}
       </Text>
       <Text className="flex-1 text-sm text-gray-700 dark:text-gray-300">
         {item.birthDate}
@@ -135,7 +138,7 @@ const PatientList = () => {
               Name
             </Text>
             <Text className="flex-1 text-base font-bold text-gray-900 dark:text-gray-100">
-              Gender
+              SSN
             </Text>
             <Text className="flex-1 text-base font-bold text-gray-900 dark:text-gray-100">
               Birthdate
