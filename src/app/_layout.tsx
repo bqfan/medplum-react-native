@@ -2,6 +2,7 @@
 import '../../global.css';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { MedplumProvider } from '@medplum/react-hooks';
 import { ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,7 +12,7 @@ import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
-import { APIProvider } from '@/api';
+import { APIProvider, medplum_client } from '@/api';
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { hydrateAuth, loadSelectedTheme, useSelectedTheme } from '@/lib';
 import { useThemeConfig } from '@/lib/use-theme-config';
@@ -57,10 +58,12 @@ function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider value={theme}>
           <GluestackUIProvider mode={selectedTheme}>
             <APIProvider>
-              <BottomSheetModalProvider>
-                {children}
-                <FlashMessage position="top" />
-              </BottomSheetModalProvider>
+              <MedplumProvider medplum={medplum_client}>
+                <BottomSheetModalProvider>
+                  {children}
+                  <FlashMessage position="top" />
+                </BottomSheetModalProvider>
+              </MedplumProvider>
             </APIProvider>
           </GluestackUIProvider>
         </ThemeProvider>

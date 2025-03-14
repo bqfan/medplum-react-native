@@ -1,5 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Env } from '@env';
+import { useMedplum } from '@medplum/react-hooks';
 import * as WebBrowser from 'expo-web-browser';
 import { useColorScheme } from 'nativewind';
 
@@ -10,11 +11,13 @@ import { ThemeItem } from '@/components/settings/theme-item';
 import { colors, FocusAwareStatusBar, ScrollView, View } from '@/components/ui';
 import { Github, Rate, Share, Support, Website } from '@/components/ui/icons';
 import { Text } from '@/components/ui/text';
-import { translate, useAuth } from '@/lib';
+import { translate } from '@/lib';
 
 /* eslint-disable max-lines-per-function */
 export default function Settings() {
-  const signOut = useAuth.use.signOut();
+  const medplum = useMedplum();
+
+  //const signOut = useAuth.use.signOut();
   const { colorScheme } = useColorScheme();
   const iconColor =
     colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];
@@ -30,6 +33,11 @@ export default function Settings() {
       console.error('Error opening browser:', error);
     }
   };
+
+  function medplumSignOut(): void {
+    medplum.signOut().catch(console.error);
+  }
+
   return (
     <>
       <FocusAwareStatusBar />
@@ -86,7 +94,12 @@ export default function Settings() {
 
           <View className="my-8">
             <ItemsContainer>
-              <Item text="settings.logout" onPress={signOut} />
+              <Item
+                text="settings.logout"
+                onPress={() => {
+                  medplumSignOut();
+                }}
+              />
             </ItemsContainer>
           </View>
         </View>

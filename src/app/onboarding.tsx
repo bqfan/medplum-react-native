@@ -48,7 +48,7 @@ export default function Onboarding() {
       </View>
       <SafeAreaView className="mt-6">
         <Button
-          className="my-12 flex flex-row items-center justify-center rounded-md bg-cyan-600 px-12 "
+          className="my-12 flex flex-row items-center justify-center rounded-md px-12 "
           onPress={() => {
             setIsFirstTime(false);
             router.replace('/login');

@@ -1,14 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
+import { useMedplum } from '@medplum/react-hooks';
+import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { Pressable } from '@/components/ui';
 import {
-  Feed as FeedIcon,
+  CrowdPatient as CrowdPatientIcon,
   Settings as SettingsIcon,
   Style as StyleIcon,
 } from '@/components/ui/icons';
-import { Text } from '@/components/ui/text';
 import { useAuth, useIsFirstTime } from '@/lib';
 
 export default function TabLayout() {
@@ -17,6 +16,8 @@ export default function TabLayout() {
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
   }, []);
+  const medplum = useMedplum();
+
   useEffect(() => {
     if (status !== 'idle') {
       setTimeout(() => {
@@ -28,7 +29,7 @@ export default function TabLayout() {
   if (isFirstTime) {
     return <Redirect href="/onboarding" />;
   }
-  if (status === 'signOut') {
+  if (!medplum.isAuthenticated()) {
     return <Redirect href="/login" />;
   }
   return (
@@ -36,10 +37,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
-          headerRight: () => <CreateNewPostLink />,
-          tabBarButtonTestID: 'feed-tab',
+          title: 'Patients',
+          tabBarIcon: ({ color }) => <CrowdPatientIcon color={color} />,
+          tabBarButtonTestID: 'patients-tab',
         }}
       />
 
@@ -64,13 +64,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const CreateNewPostLink = () => {
-  return (
-    <Link href="/feed/add-post" asChild>
-      <Pressable>
-        <Text className="px-3 text-primary-300">Create</Text>
-      </Pressable>
-    </Link>
-  );
-};
