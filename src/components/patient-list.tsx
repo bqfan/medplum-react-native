@@ -1,7 +1,8 @@
 import { useMedplum } from '@medplum/react-hooks';
 import { FlashList } from '@shopify/flash-list';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
 
 import { Button, ButtonText } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -9,6 +10,7 @@ import { Text } from '@/components/ui/text';
 
 /* eslint-disable max-lines-per-function */
 const PatientList = () => {
+  const router = useRouter();
   const [patients, setPatients] = useState<
     {
       id: string;
@@ -86,52 +88,54 @@ const PatientList = () => {
     };
     index: number;
   }) => (
-    <View
-      className={`flex-row items-center p-3 ${
-        index % 2 === 0
-          ? 'bg-gray-100 dark:bg-gray-800'
-          : 'bg-gray-200 dark:bg-gray-700'
-      }`}
-    >
-      {/* Name Column */}
-      <View className="w-1/4 border-r border-gray-300 pr-2 dark:border-gray-600">
-        <Text
-          numberOfLines={1}
-          className="truncate text-sm text-gray-700 dark:text-gray-300"
-        >
-          {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
-        </Text>
-      </View>
+    <Pressable onPress={() => router.push(`/(app)/patient/${item.id}`)}>
+      <View
+        className={`flex-row items-center p-3 ${
+          index % 2 === 0
+            ? 'bg-gray-100 dark:bg-gray-800'
+            : 'bg-gray-200 dark:bg-gray-700'
+        }`}
+      >
+        {/* Name Column */}
+        <View className="w-1/4 border-r border-gray-300 pr-2 dark:border-gray-600">
+          <Text
+            numberOfLines={1}
+            className="truncate text-sm text-gray-700 dark:text-gray-300"
+          >
+            {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
+          </Text>
+        </View>
 
-      {/* SSN Column */}
-      <View className="w-[30%] border-r border-gray-300 px-2 dark:border-gray-600">
-        <Text
-          numberOfLines={1}
-          className="truncate text-sm text-gray-700 dark:text-gray-300"
-        >
-          {item.ssn}
-        </Text>
-      </View>
+        {/* SSN Column */}
+        <View className="w-[30%] border-r border-gray-300 px-2 dark:border-gray-600">
+          <Text
+            numberOfLines={1}
+            className="truncate text-sm text-gray-700 dark:text-gray-300"
+          >
+            {item.ssn}
+          </Text>
+        </View>
 
-      <View className="w-1/5 border-r border-gray-300 px-2 dark:border-gray-600">
-        <Text
-          numberOfLines={1}
-          className="truncate text-sm text-gray-700 dark:text-gray-300"
-        >
-          {item.gender}
-        </Text>
-      </View>
+        <View className="w-1/5 border-r border-gray-300 px-2 dark:border-gray-600">
+          <Text
+            numberOfLines={1}
+            className="truncate text-sm text-gray-700 dark:text-gray-300"
+          >
+            {item.gender}
+          </Text>
+        </View>
 
-      {/* Wider Birthdate Column */}
-      <View className="w-1/4 px-1">
-        <Text
-          numberOfLines={1}
-          className="truncate text-sm text-gray-700 dark:text-gray-300"
-        >
-          {item.birthDate}
-        </Text>
+        {/* Wider Birthdate Column */}
+        <View className="w-1/4 px-1">
+          <Text
+            numberOfLines={1}
+            className="truncate text-sm text-gray-700 dark:text-gray-300"
+          >
+            {item.birthDate}
+          </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 
   const handlePreviousPage = () => {
