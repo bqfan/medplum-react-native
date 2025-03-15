@@ -42,7 +42,7 @@ export default function Login() {
         errorMessage.includes('Invalid password') ||
         errorMessage.includes('Email or password')
       ) {
-        setPasswordError(errorMessage);
+        setPasswordError('Invalid password');
       }
     }
   };
