@@ -15,6 +15,7 @@ const PatientList = () => {
       name?: { given?: string[]; family?: string }[];
       birthDate: string;
       ssn: string;
+      gender: string;
     }[]
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,11 +55,12 @@ const PatientList = () => {
           response.map((patient: any) => ({
             id: patient.id,
             name: patient.name,
-            birthDate: patient.birthDate || 'N/A',
             ssn:
               patient.identifier?.find(
                 (id: any) => id.system === 'http://hl7.org/fhir/sid/us-ssn'
-              )?.value || 'N/A', // Add SSN extraction
+              )?.value || 'N/A',
+            gender: patient.gender || 'N/A',
+            birthDate: patient.birthDate || 'N/A',
           }))
         );
       } catch (error) {
@@ -80,6 +82,7 @@ const PatientList = () => {
       name?: { given?: string[]; family?: string }[];
       birthDate: string;
       ssn: string;
+      gender: string;
     };
     index: number;
   }) => (
@@ -90,15 +93,44 @@ const PatientList = () => {
           : 'bg-gray-200 dark:bg-gray-700'
       }`}
     >
-      <Text className="flex-[2] text-sm text-gray-700 dark:text-gray-300">
-        {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
-      </Text>
-      <Text className="flex-1 text-sm text-gray-700 dark:text-gray-300">
-        {item.ssn}
-      </Text>
-      <Text className="flex-1 text-sm text-gray-700 dark:text-gray-300">
-        {item.birthDate}
-      </Text>
+      {/* Name Column */}
+      <View className="w-1/4 border-r border-gray-300 pr-2 dark:border-gray-600">
+        <Text
+          numberOfLines={1}
+          className="truncate text-sm text-gray-700 dark:text-gray-300"
+        >
+          {item.name?.[0]?.given?.join(' ')} {item.name?.[0]?.family}
+        </Text>
+      </View>
+
+      {/* SSN Column */}
+      <View className="w-[30%] border-r border-gray-300 px-2 dark:border-gray-600">
+        <Text
+          numberOfLines={1}
+          className="truncate text-sm text-gray-700 dark:text-gray-300"
+        >
+          {item.ssn}
+        </Text>
+      </View>
+
+      <View className="w-1/5 border-r border-gray-300 px-2 dark:border-gray-600">
+        <Text
+          numberOfLines={1}
+          className="truncate text-sm text-gray-700 dark:text-gray-300"
+        >
+          {item.gender}
+        </Text>
+      </View>
+
+      {/* Wider Birthdate Column */}
+      <View className="w-1/4 px-1">
+        <Text
+          numberOfLines={1}
+          className="truncate text-sm text-gray-700 dark:text-gray-300"
+        >
+          {item.birthDate}
+        </Text>
+      </View>
     </View>
   );
 
@@ -134,15 +166,26 @@ const PatientList = () => {
         <>
           {/* Table Header */}
           <View className="flex-row items-center bg-gray-300 p-3 dark:bg-gray-900">
-            <Text className="flex-[2] text-base font-bold text-gray-900 dark:text-gray-100">
-              Name
-            </Text>
-            <Text className="flex-1 text-base font-bold text-gray-900 dark:text-gray-100">
-              SSN
-            </Text>
-            <Text className="flex-1 text-base font-bold text-gray-900 dark:text-gray-100">
-              Birthdate
-            </Text>
+            <View className="w-1/4 border-r border-gray-100 pr-2 dark:border-gray-700">
+              <Text className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                Name
+              </Text>
+            </View>
+            <View className="w-[30%] border-r border-gray-100 px-2 dark:border-gray-700">
+              <Text className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                SSN
+              </Text>
+            </View>
+            <View className="w-1/5 border-r border-gray-100 px-2 dark:border-gray-700">
+              <Text className="truncate text-sm font-bold text-gray-900 dark:text-gray-100">
+                Gender
+              </Text>
+            </View>
+            <View className="w-1/4 px-1">
+              <Text className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                Birthdate
+              </Text>
+            </View>
           </View>
 
           {/* FlashList for Performance */}
