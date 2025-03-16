@@ -41,9 +41,6 @@ importers:
       '@medplum/expo-polyfills':
         specifier: ^4.0.3
         version: 4.0.3(3a410dae273520a9c8bda8cd80d244af)
-      '@medplum/fhirtypes':
-        specifier: ^4.0.3
-        version: 4.0.3
       '@medplum/react-hooks':
         specifier: ^4.0.3
         version: 4.0.3(@medplum/core@4.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -53,6 +50,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.52.1
         version: 5.52.1(react@18.3.1)
+      '@types/fhir':
+        specifier: ^0.0.41
+        version: 0.0.41
       app-icon-badge:
         specifier: ^0.1.2
         version: 0.1.2
@@ -1696,10 +1696,6 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@medplum/fhirtypes@4.0.3':
-    resolution: {integrity: sha512-VRnFpLodFRgzSI/+FC+7i/eK3AoTGRgIPEoWKBI7DRfi8X/QPfUKFQkm1OwyYHtLvgTWtfew9jWqsE1QGJsl8w==}
-    engines: {node: '>=20.0.0'}
-
   '@medplum/react-hooks@4.0.3':
     resolution: {integrity: sha512-s4lGVV/xSLYjbu+38KNUMDl232VSaF906uEuc6rnGM4qKZvx3u+aFY+sWlNxeY56Zcrqc3zTPpib2sYHaMuOSQ==}
     engines: {node: '>=20.0.0'}
@@ -2070,6 +2066,9 @@ packages:
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
+
+  '@types/fhir@0.0.41':
+    resolution: {integrity: sha512-MAQAFufNZBZ6V0F94Nhknmmh/E3iMXFK4n/L8RkSNjKtOJnvaAJERivNOj35VVx9VCQBJbE0BHSzikfBahoRhA==}
 
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
@@ -9855,8 +9854,6 @@ snapshots:
       react-native-url-polyfill: 2.0.0(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))
       text-encoding: 0.7.0
 
-  '@medplum/fhirtypes@4.0.3': {}
-
   '@medplum/react-hooks@4.0.3(@medplum/core@4.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@medplum/core': 4.0.3
@@ -10386,6 +10383,8 @@ snapshots:
       '@types/json-schema': 7.0.15
 
   '@types/estree@1.0.6': {}
+
+  '@types/fhir@0.0.41': {}
 
   '@types/graceful-fs@4.1.9':
     dependencies:
