@@ -16,12 +16,6 @@ interface DiagnosticReport {
   conclusion?: string;
 }
 
-const formatDate = (dateString: string | null) => {
-  if (!dateString) return 'N/A';
-  const date = new Date(dateString);
-  return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
-};
-
 /* eslint-disable max-lines-per-function */
 export default function PatientDetails() {
   const { patientId } = useLocalSearchParams();
@@ -50,7 +44,7 @@ export default function PatientDetails() {
     };
 
     loadData();
-  }, [patientId, medplum]);
+  }, [patientId]);
 
   if (loading) return <Spinner />;
 
@@ -76,7 +70,7 @@ export default function PatientDetails() {
             {patient.name?.[0]?.given?.join(' ')} {patient.name?.[0]?.family}
           </Text>
           <Text className="mb-1">
-            Birth Date: {formatDate(patient.birthDate) || 'N/A'}
+            Birth Date: {patient.birthDate || 'Unknown'}
           </Text>
           <Text>
             SSN:{' '}
@@ -102,7 +96,7 @@ export default function PatientDetails() {
               </Text>
               <Text className="mb-1 text-sm">Status: {report.status}</Text>
               <Text className="mb-1 text-sm">
-                Date: {formatDate(report.effectiveDateTime ?? null) || 'N/A'}
+                Date: {report.effectiveDateTime || 'Unknown'}
               </Text>
               {report.conclusion && (
                 <Text className="mt-2 text-sm">
