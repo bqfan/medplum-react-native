@@ -62,26 +62,34 @@ export default function PatientDetails() {
 
       {/* Scrollable Content */}
       <ScrollView className="flex-1 p-4">
-        <View className="px-4 pb-6 pt-4">
-          {/* Patient Details Section */}
-          <Text className="mb-6 text-2xl font-bold dark:text-gray-100">
+        {/* Patient Details Section */}
+        <View className="px-1 pb-6 pt-2">
+          <Text className="mb-2 text-lg font-bold dark:text-gray-100">
             Patient Details
           </Text>
-          <View className="flex-row flex-wrap gap-4">
+          <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
             {/* Name */}
-            <View className="w-full md:w-[48%]">
-              <Text className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                Name
+            <View className="w-1/2 pr-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
+                Family Name
               </Text>
               <Text className="text-base font-medium dark:text-gray-200">
-                {patient?.name?.[0]?.given?.join(' ')}{' '}
                 {patient?.name?.[0]?.family}
               </Text>
             </View>
 
+            <View className="w-1/2 pl-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
+                Given Name
+              </Text>
+              <Text className="text-base font-medium dark:text-gray-200">
+                {patient?.name?.[0]?.given}
+              </Text>
+            </View>
+
             {/* SSN */}
-            <View className="w-full md:w-[48%]">
-              <Text className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+            <View className="w-1/2 pr-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
                 SSN
               </Text>
               <Text className="text-base dark:text-gray-300">
@@ -93,8 +101,8 @@ export default function PatientDetails() {
             </View>
 
             {/* Gender */}
-            <View className="w-full md:w-[48%]">
-              <Text className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+            <View className="w-1/2 pl-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
                 Gender
               </Text>
               <Text className="text-base dark:text-gray-300">
@@ -103,8 +111,8 @@ export default function PatientDetails() {
             </View>
 
             {/* Birth Date */}
-            <View className="w-full md:w-[48%]">
-              <Text className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+            <View className="w-1/2 pr-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
                 Birth Date
               </Text>
               <Text className="text-base dark:text-gray-300">
@@ -113,19 +121,19 @@ export default function PatientDetails() {
             </View>
 
             {/* Phone */}
-            <View className="w-full md:w-[48%]">
-              <Text className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+            <View className="w-1/2 pl-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
                 Phone
               </Text>
               <Text className="text-base dark:text-gray-300">
-                {patient?.telecom?.find((t) => t.system === 'phone')?.value ||
+                {patient?.telecom?.find((t) => t?.system === 'phone')?.value ||
                   'N/A'}
               </Text>
             </View>
 
-            {/* Active Status */}
-            <View className="w-full md:w-[48%]">
-              <Text className="mb-1 text-sm text-gray-500 dark:text-gray-400">
+            {/* Status */}
+            <View className="w-1/2 pr-2">
+              <Text className="text-sm text-gray-500 dark:text-gray-400">
                 Status
               </Text>
               <View className="flex-row items-center gap-2">
