@@ -1,7 +1,13 @@
 // src/app/(app)/patient/[patientId]/index.tsx
+import type {
+  Bundle,
+  BundleEntry,
+  DiagnosticReport,
+  Observation,
+  Patient,
+} from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react-hooks';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import type { DiagnosticReport } from 'fhir/r4';
 import { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -20,23 +26,60 @@ export default function PatientDetails() {
   const { patientId } = useLocalSearchParams();
   const medplum = useMedplum();
   const router = useRouter();
-  const [patient, setPatient] = useState<fhir4.Patient | undefined>();
-  const [reports, setReports] = useState<DiagnosticReport[]>([]);
   const [loading, setLoading] = useState(true);
+  const [_, setError] = useState<string>();
+  const [patient, setPatient] = useState<Patient>();
+  const [reports, setReports] = useState<
+    (DiagnosticReport & { observations: Observation[] })[]
+  >([]);
 
   useEffect(() => {
     const loadData = async () => {
       try {
+        // 1. Fix Patient type assertion
         const pt = await medplum.readResource('Patient', patientId as string);
-        setPatient(pt);
+        setPatient(pt as Patient); // Explicit type assertion
 
-        const diagnostics = await medplum.searchResources('DiagnosticReport', {
-          subject: `Patient/${patientId}`,
-          _include: 'DiagnosticReport:result', // Use string instead of array
-        });
+        // 2. Use correct search method with proper generics
+        const bundle: Bundle<DiagnosticReport> = await medplum.search(
+          'DiagnosticReport',
+          `subject=Patient/${patientId}&_include=DiagnosticReport:result`
+        );
+
+        // 3. Process bundle entries
+        const entries: BundleEntry[] = bundle.entry || [];
+
+        // 4. Extract all observations first
+        const observations = entries
+          .filter(
+            (entry): entry is BundleEntry<Observation> =>
+              entry.resource?.resourceType === 'Observation'
+          )
+          .map((entry) => entry.resource as Observation);
+
+        // 5. Map reports with their observations
+        const diagnostics = entries
+          .filter(
+            (entry): entry is BundleEntry<DiagnosticReport> =>
+              entry.resource?.resourceType === 'DiagnosticReport'
+          )
+          .map((entry) => {
+            const report = entry.resource as DiagnosticReport;
+            return {
+              ...report,
+              observations: observations.filter((obs) =>
+                report.result?.some((ref: fhir4.Reference) =>
+                  ref.reference?.endsWith(`/${obs.id}`)
+                )
+              ),
+            };
+          });
+
         setReports(diagnostics);
-      } catch (error) {
-        console.error('Error loading data:', error);
+        setError(undefined);
+      } catch (err) {
+        console.error('Error loading data:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -126,8 +169,9 @@ export default function PatientDetails() {
                 Phone
               </Text>
               <Text className="text-base dark:text-gray-300">
-                {patient?.telecom?.find((t) => t?.system === 'phone')?.value ||
-                  'N/A'}
+                {patient?.telecom?.find(
+                  (t: fhir4.ContactPoint) => t?.system === 'phone'
+                )?.value || 'N/A'}
               </Text>
             </View>
 
@@ -164,6 +208,10 @@ export default function PatientDetails() {
               className="mb-3 rounded-lg bg-gray-100 p-3 dark:bg-gray-800"
             >
               <Text className="mb-1 text-base font-semibold">
+                {reports[0]?.observations[0]?.valueQuantity?.value ??
+                  'No value available'}
+              </Text>
+              <Text className="mb-1 text-base font-semibold">
                 {report.code?.text || 'Unnamed Report'}
               </Text>
               <Text className="mb-1 text-sm">Status: {report.status}</Text>
@@ -175,6 +223,19 @@ export default function PatientDetails() {
                   Conclusion: {report.conclusion}
                 </Text>
               )}
+              {report.observations.map((obs) => (
+                <View key={obs.id} className="mt-2">
+                  <Text className="text-sm">
+                    Code: {obs?.valueQuantity?.code ?? 'N/A'}
+                  </Text>
+                  <Text className="text-sm">
+                    Unit: {obs?.valueQuantity?.unit ?? 'N/A'}
+                  </Text>
+                  <Text className="text-sm">
+                    Value: {obs?.valueQuantity?.value?.toString() ?? 'N/A'}
+                  </Text>
+                </View>
+              ))}
             </View>
           ))
         )}
