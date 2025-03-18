@@ -15,6 +15,32 @@ import { Button, ButtonText } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 
+const getInterpretation = (
+  input: string | fhir4.CodeableConcept[] | undefined
+): string => {
+  if (!input) return 'N/A';
+
+  if (typeof input === 'string') {
+    return input;
+  }
+
+  if (Array.isArray(input)) {
+    return (
+      input
+        .map(
+          (concept) =>
+            concept.text ||
+            concept.coding?.[0]?.display ||
+            concept.coding?.[0]?.code
+        )
+        .filter(Boolean)
+        .join(', ') || 'N/A'
+    );
+  }
+
+  return 'N/A';
+};
+
 const formatDate = (dateString: string | null) => {
   if (!dateString) return 'N/A';
   const date = new Date(dateString);
@@ -203,39 +229,188 @@ export default function PatientDetails() {
           </Text>
         ) : (
           reports.map((report) => (
-            <View
-              key={report.id}
-              className="mb-3 rounded-lg bg-gray-100 p-3 dark:bg-gray-800"
-            >
-              <Text className="mb-1 text-base font-semibold">
-                {reports[0]?.observations[0]?.valueQuantity?.value ??
-                  'No value available'}
-              </Text>
-              <Text className="mb-1 text-base font-semibold">
-                {report.code?.text || 'Unnamed Report'}
-              </Text>
-              <Text className="mb-1 text-sm">Status: {report.status}</Text>
-              <Text className="mb-1 text-sm">
-                Date: {formatDate(report.effectiveDateTime ?? null) || 'N/A'}
-              </Text>
-              {report.conclusion && (
-                <Text className="mt-2 text-sm">
-                  Conclusion: {report.conclusion}
+            <View key={report.id}>
+              <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+                <Text className="mb-1 text-base font-semibold">
+                  {report.code?.text || 'Unnamed Report'}
                 </Text>
-              )}
-              {report.observations.map((obs) => (
-                <View key={obs.id} className="mt-2">
-                  <Text className="text-sm">
-                    Code: {obs?.valueQuantity?.code ?? 'N/A'}
+                <View className="w-1/2 pr-2">
+                  <Text className="text-sm text-gray-500 dark:text-gray-400">
+                    Status
                   </Text>
-                  <Text className="text-sm">
-                    Unit: {obs?.valueQuantity?.unit ?? 'N/A'}
+                  <View className="flex-row items-center gap-2">
+                    <View
+                      className={`size-3 rounded-full ${
+                        report?.status === 'final'
+                          ? 'bg-green-500 dark:bg-green-400'
+                          : 'bg-gray-400 dark:bg-gray-600'
+                      }`}
+                    />
+                    <Text className="text-sm">{report?.status ?? 'N/A'}</Text>
+                  </View>
+                </View>
+                <View className="w-1/2 pl-2">
+                  <Text className="text-sm text-gray-500 dark:text-gray-400">
+                    Effective Date
                   </Text>
-                  <Text className="text-sm">
-                    Value: {obs?.valueQuantity?.value?.toString() ?? 'N/A'}
+                  <Text className="text-sm dark:text-gray-300">
+                    {formatDate(report.effectiveDateTime ?? null) || 'N/A'}
                   </Text>
                 </View>
-              ))}
+                {report.conclusion && (
+                  <View className="w-1/2 pl-2">
+                    <Text className="text-sm text-gray-500 dark:text-gray-400">
+                      Conclusion
+                    </Text>
+                    <Text className="text-sm dark:text-gray-300">
+                      {report.conclusion}
+                    </Text>
+                  </View>
+                )}
+                {report.observations.map((obs) => (
+                  <View
+                    key={obs.id}
+                    className="my-4 mt-0 w-full rounded-md bg-gray-200 p-3 dark:bg-gray-600"
+                  >
+                    <Text className="mb-2 mt-0 text-sm font-semibold text-gray-900 dark:text-gray-300">
+                      {obs?.code?.text ?? 'N/A'}
+                    </Text>
+                    {/* valueQuantity */}
+                    <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+                      <View className="w-1/2 pr-2">
+                        <Text className="text-xs text-gray-500 dark:text-gray-400">
+                          Value
+                        </Text>
+                        <Text className="text-xs font-semibold dark:text-gray-200">
+                          {obs?.valueQuantity?.value?.toFixed(2).toString() ??
+                            'N/A'}{' '}
+                          {obs?.valueQuantity?.unit ?? 'N/A'}
+                        </Text>
+                      </View>
+                      {/* Reference Ranges */}
+                      <View className="w-1/2 pl-2">
+                        <Text className="text-xs text-gray-500 dark:text-gray-400">
+                          Reference Ranges
+                        </Text>
+                        <Text className="text-xs font-medium dark:text-gray-200">
+                          {obs?.referenceRange?.map((range) => {
+                            const rangeKey =
+                              [
+                                range.type?.text,
+                                range.low?.value,
+                                range.low?.unit,
+                                range.high?.value,
+                                range.high?.unit,
+                              ]
+                                .filter(Boolean)
+                                .join('-')
+                                .replace(/\s+/g, '_') || crypto.randomUUID();
+
+                            return (
+                              <Text key={rangeKey} className="text-sm">
+                                Reference Range (
+                                {range.type?.text || 'Unknown type'}
+                                ): {range.low?.value?.toString() ?? 'N/A'}{' '}
+                                {range.low?.unit || ''} -{' '}
+                                {range.high?.value?.toString() ?? 'N/A'}{' '}
+                                {range.high?.unit || ''}
+                              </Text>
+                            );
+                          })}
+                          {!obs?.referenceRange?.length && (
+                            <Text className="text-xs">N/A</Text>
+                          )}
+                        </Text>
+                      </View>
+
+                      {/* Categories */}
+                      <View className="w-1/2 pr-2">
+                        <Text className="text-xs text-gray-500 dark:text-gray-400">
+                          Category
+                        </Text>
+                        <Text className="text-xs font-medium dark:text-gray-200">
+                          {obs?.category?.map((category) => {
+                            const categoryKey =
+                              category.coding?.[0]?.code ||
+                              category.text?.replace(/\s+/g, '-') ||
+                              crypto.randomUUID();
+
+                            return (
+                              <Text key={categoryKey} className="text-xs">
+                                {category.coding
+                                  ?.map((coding) => coding.display)
+                                  .filter(Boolean)
+                                  .join(', ') ||
+                                  category.text ||
+                                  'N/A'}
+                              </Text>
+                            );
+                          })}
+                          {!obs?.category?.length && (
+                            <Text className="text-sm">N/A</Text>
+                          )}
+                        </Text>
+                      </View>
+
+                      {/* Performer */}
+                      <View className="w-1/2 pl-2">
+                        <Text className="text-xs text-gray-500 dark:text-gray-400">
+                          Performer
+                        </Text>
+                        <Text className="text-xs font-medium dark:text-gray-300">
+                          {obs?.performer?.map((performer) => {
+                            // Get a stable key from FHIR reference
+                            const resourceId = performer.reference
+                              ?.split('/')
+                              .pop(); // Extracts "123" from "Practitioner/123"
+                            const key =
+                              resourceId ||
+                              performer.display?.replace(/\s+/g, '-') ||
+                              crypto.randomUUID();
+
+                            return (
+                              <Text key={key} className="text-sm">
+                                {performer.display ?? 'N/A'}
+                              </Text>
+                            );
+                          })}
+                          {!obs?.performer?.length && (
+                            <Text className="text-sm">N/A</Text>
+                          )}
+                        </Text>
+                      </View>
+
+                      {/* interpretation */}
+                      <View className="w-1/2 pr-2">
+                        <Text className="text-sm text-gray-500 dark:text-gray-400">
+                          Interpretation
+                        </Text>
+                        <Text className="text-xs font-medium dark:text-gray-200">
+                          {getInterpretation(obs?.interpretation)}
+                        </Text>
+                      </View>
+                      {/* Status */}
+                      <View className="w-1/2 pr-2">
+                        <Text className="text-xs text-gray-500 dark:text-gray-400">
+                          Status
+                        </Text>
+                        <View className="flex-row items-center gap-2">
+                          <View
+                            className={`size-3 rounded-full ${
+                              obs?.status === 'final'
+                                ? 'bg-green-500 dark:bg-green-400'
+                                : 'bg-gray-400 dark:bg-gray-600'
+                            }`}
+                          />
+                          <Text className="text-sm">
+                            {obs?.status ?? 'N/A'}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                ))}
+              </View>
             </View>
           ))
         )}
