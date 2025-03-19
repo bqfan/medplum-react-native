@@ -41,9 +41,6 @@ importers:
       '@medplum/expo-polyfills':
         specifier: ^4.0.3
         version: 4.0.3(3a410dae273520a9c8bda8cd80d244af)
-      '@medplum/fhirtypes':
-        specifier: ^4.0.3
-        version: 4.0.3
       '@medplum/react-hooks':
         specifier: ^4.0.3
         version: 4.0.3(@medplum/core@4.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1779,10 +1776,6 @@ packages:
       expo-standard-web-crypto: '*'
       react: '*'
       react-native: '*'
-
-  '@medplum/fhirtypes@4.0.3':
-    resolution: {integrity: sha512-VRnFpLodFRgzSI/+FC+7i/eK3AoTGRgIPEoWKBI7DRfi8X/QPfUKFQkm1OwyYHtLvgTWtfew9jWqsE1QGJsl8w==}
-    engines: {node: '>=20.0.0'}
 
   '@medplum/react-hooks@4.0.3':
     resolution: {integrity: sha512-s4lGVV/xSLYjbu+38KNUMDl232VSaF906uEuc6rnGM4qKZvx3u+aFY+sWlNxeY56Zcrqc3zTPpib2sYHaMuOSQ==}
@@ -10111,8 +10104,6 @@ snapshots:
       react-native: 0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1)
       react-native-url-polyfill: 2.0.0(react-native@0.76.7(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))
       text-encoding: 0.7.0
-
-  '@medplum/fhirtypes@4.0.3': {}
 
   '@medplum/react-hooks@4.0.3(@medplum/core@4.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
