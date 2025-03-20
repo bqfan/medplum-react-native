@@ -9,7 +9,7 @@ import type {
   Patient,
 } from 'fhir/r4';
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import PatientScreen from '@/components/patient-screen';
 import { Button, ButtonText } from '@/components/ui/button';
@@ -89,25 +89,27 @@ export default function PatientDetails() {
   if (loading) return <Spinner />;
 
   return (
-    <View className="flex-1 bg-white dark:bg-black">
-      {/* Back Button */}
-      <View className="border-b border-gray-200 p-4 dark:border-gray-700">
-        <Button
-          //variant="ghost"
-          className="self-start"
-          onPress={() => router.back()}
-        >
-          <ButtonText>← Back to Patients</ButtonText>
-        </Button>
-      </View>
-
-      {patient ? (
-        <PatientScreen patient={patient} reports={reports} />
-      ) : (
-        <View className="flex-1 items-center justify-center">
-          No patient selected
+    <SafeAreaView className="w-full flex-1 items-center justify-center">
+      <View className="flex-1 bg-white dark:bg-black">
+        {/* Back Button */}
+        <View className="border-b border-gray-200 p-4 dark:border-gray-700">
+          <Button
+            //variant="ghost"
+            className="self-start"
+            onPress={() => router.back()}
+          >
+            <ButtonText>← Back to Patients</ButtonText>
+          </Button>
         </View>
-      )}
-    </View>
+
+        {patient ? (
+          <PatientScreen patient={patient} reports={reports} />
+        ) : (
+          <View className="flex-1 items-center justify-center">
+            No patient selected
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }

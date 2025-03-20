@@ -52,7 +52,10 @@ export default function TabLayout() {
         }}
       />
       {/* hide patient screen */}
-      <Tabs.Screen name="patient/[patientId]/index" options={{ href: null }} />
+      <Tabs.Screen
+        name="patient/[patientId]/index"
+        options={{ href: null, headerShown: false }}
+      />
     </Tabs>
   );
 }
