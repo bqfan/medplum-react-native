@@ -6,7 +6,6 @@ import React, { useCallback, useEffect } from 'react';
 import {
   CrowdPatient as CrowdPatientIcon,
   Settings as SettingsIcon,
-  Style as StyleIcon,
 } from '@/components/ui/icons';
 import { useAuth, useIsFirstTime } from '@/lib';
 
@@ -44,15 +43,6 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="style"
-        options={{
-          title: 'Style',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <StyleIcon color={color} />,
-          tabBarButtonTestID: 'style-tab',
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
@@ -61,6 +51,8 @@ export default function TabLayout() {
           tabBarButtonTestID: 'settings-tab',
         }}
       />
+      {/* hide patient screen */}
+      <Tabs.Screen name="patient/[patientId]/index" options={{ href: null }} />
     </Tabs>
   );
 }
