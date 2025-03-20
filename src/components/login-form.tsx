@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
@@ -31,6 +32,7 @@ export type LoginFormProps = {
   passwordError?: string;
 };
 
+/* eslint-disable max-lines-per-function */
 export const LoginForm = ({
   onSubmit,
   emailError,
@@ -58,17 +60,26 @@ export const LoginForm = ({
     >
       <View className="flex-1 justify-center p-4">
         <View className="items-center justify-center">
+          <Image
+            className="h-16 w-48 overflow-hidden rounded-t-xl"
+            source={require('../../assets/images/medplum-logo.png')}
+          />
+          <Text
+            testID="form-title"
+            className="pb-6 text-center text-lg font-bold"
+          >
+            FHIR Server
+          </Text>
           <Text
             testID="form-title"
             className="pb-6 text-center text-4xl font-bold"
           >
             Sign In
           </Text>
-
-          <Text className="mb-6 max-w-xs text-center text-gray-500">
+          {/* <Text className="mb-6 max-w-xs text-center text-gray-500">
             Welcome! 👋 This is a demo login screen! Feel free to use any email
             and password to sign in and try it out.
-          </Text>
+          </Text> */}
         </View>
         <ControlledInput
           testID="email-input"
