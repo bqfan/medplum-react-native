@@ -1,3 +1,4 @@
+import { Env } from '@env';
 import { MedplumClient } from '@medplum/core';
 import {
   ExpoClientStorage,
@@ -13,7 +14,7 @@ export const medplum_client = new MedplumClient({
   // Enter your Medplum connection details here
   // See MedplumClient docs for more details
   // baseUrl: 'http://localhost:8103',
-  baseUrl: 'https://api.medplum.com',
+  baseUrl: Env.MEDPLUM_BASE_URL,
   // ------------------------------------------------------------------------------
   // If you are testing this out with your physical Android / iOS device and not an emulator,
   // you will need to put your computer's local IP address here, for example:
@@ -22,7 +23,7 @@ export const medplum_client = new MedplumClient({
   // but you will need to change the protocol to 'http://' and the port to 8103 (the Medplum server's default) or whatever port your server is using
   // ------------------------------------------------------------------------------
   // clientId: 'MY_CLIENT_ID',
-  clientId: '9bbaf338-a878-4d1f-9b22-f370d33fddbf',
+  clientId: Env.MEDPLUM_CLIENT_ID,
   // projectId: 'MY_PROJECT_ID',
   storage: new ExpoClientStorage(),
 });
