@@ -31,10 +31,6 @@ Copy `.env.development.example` as `.env.development` and set `MEDPLUM_CLIENT_ID
 vim ~/.zshrc
 ```
 
-```sh
-export MEDPLUM_CLIENT_ID=xxxxxxxxx
-```
-
 To run the app on ios
 
 ```sh
