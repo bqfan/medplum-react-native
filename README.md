@@ -25,15 +25,10 @@ cd ./fhir-app
 pnpm install
 ```
 
-Set MEDPLUM_CLIENT_ID in shell:
-MEDPLUM_CLIENT_ID can be created in app.medplum.com
+Copy `.env.development.example` as `.env.development` and set `MEDPLUM_CLIENT_ID` in `.env.development` in where `MEDPLUM_CLIENT_ID` can be retrieved from https://app.medplum.com/ClientApplication.
 
 ```sh
 vim ~/.zshrc
-```
-
-```sh
-export MEDPLUM_CLIENT_ID=xxxxxxxxx
 ```
 
 To run the app on ios
