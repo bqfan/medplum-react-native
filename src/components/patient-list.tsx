@@ -22,7 +22,7 @@ const PatientList = () => {
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [patientsPerPage] = useState(20);
+  const [patientsPerPage] = useState(30);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const medplum = useMedplum();
