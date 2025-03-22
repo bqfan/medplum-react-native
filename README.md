@@ -37,6 +37,10 @@ To run the app on Android
 pnpm android
 ```
 
+## 📸 Screen shots
+
+<img src="/assets/images/screenshots/splash-screen.png" alt="splash screen" width=30%><img src="/assets/images/screenshots/onboarding.png" alt="onboarding screen" width=30%><img src="/assets/images/screenshots/login-screen.png" alt="login screen" width=30%><img src="/assets/images/screenshots/patient-list.png" alt="patient list" width=30%><img src="/assets/images/screenshots/patient-screen.png" alt="patient screen" width=30%><img src="/assets/images/screenshots/themes.png" alt="themes" width=30%><img src="/assets/images/screenshots/dark-theme.png" alt="dark-theme" width=30%>
+
 ## ✍️ Documentation
 
 - [Rules and Conventions](https://starter.obytes.com/getting-started/rules-and-conventions/)
