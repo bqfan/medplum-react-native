@@ -156,39 +156,41 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
               <Text className="mb-1 text-base font-semibold">
                 {report.code?.text || 'Unnamed Report'}
               </Text>
-              <View className="w-1/2 pr-2">
-                <Text className="text-sm text-gray-500 dark:text-gray-400">
-                  Status
-                </Text>
-                <View className="flex-row items-center gap-2">
-                  <View
-                    className={`size-3 rounded-full ${
-                      report?.status === 'final'
-                        ? 'bg-green-500 dark:bg-green-400'
-                        : 'bg-gray-400 dark:bg-gray-600'
-                    }`}
-                  />
-                  <Text className="text-sm">{report?.status ?? 'N/A'}</Text>
+              <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-0 dark:bg-gray-800">
+                <View className="w-1/2 pr-2">
+                  <Text className="text-sm text-gray-500 dark:text-gray-400">
+                    Status
+                  </Text>
+                  <View className="flex-row items-center gap-2">
+                    <View
+                      className={`size-3 rounded-full ${
+                        report?.status === 'final'
+                          ? 'bg-green-500 dark:bg-green-400'
+                          : 'bg-gray-400 dark:bg-gray-600'
+                      }`}
+                    />
+                    <Text className="text-sm">{report?.status ?? 'N/A'}</Text>
+                  </View>
                 </View>
-              </View>
-              <View className="w-1/2 pl-2">
-                <Text className="text-sm text-gray-500 dark:text-gray-400">
-                  Effective Date
-                </Text>
-                <Text className="text-sm dark:text-gray-300">
-                  {formatDate(report.effectiveDateTime ?? null) || 'N/A'}
-                </Text>
-              </View>
-              {report.conclusion && (
                 <View className="w-1/2 pl-2">
                   <Text className="text-sm text-gray-500 dark:text-gray-400">
-                    Conclusion
+                    Effective Date
                   </Text>
                   <Text className="text-sm dark:text-gray-300">
-                    {report.conclusion}
+                    {formatDate(report.effectiveDateTime ?? null) || 'N/A'}
                   </Text>
                 </View>
-              )}
+                {report.conclusion && (
+                  <View className="w-1/2 pl-2">
+                    <Text className="text-sm text-gray-500 dark:text-gray-400">
+                      Conclusion
+                    </Text>
+                    <Text className="text-sm dark:text-gray-300">
+                      {report.conclusion}
+                    </Text>
+                  </View>
+                )}
+              </View>
               {report?.observations?.map((obs: Observation) => (
                 <View
                   key={obs.id}
