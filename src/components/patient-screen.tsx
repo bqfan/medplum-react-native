@@ -58,7 +58,7 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
         <Text className="mb-2 text-lg font-bold dark:text-gray-100">
           Patient Details
         </Text>
-        <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-6 dark:bg-gray-800">
+        <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
           {/* Name */}
           <View className="w-1/2 pr-2">
             <Text className="text-sm text-gray-500 dark:text-gray-400">
@@ -152,11 +152,11 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
       ) : (
         reports.map((report: ExtendedDiagnosticReport) => (
           <View key={report.id}>
-            <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-6 dark:bg-gray-800">
+            <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
               <Text className="mb-1 text-base font-semibold">
                 {report.code?.text || 'Unnamed Report'}
               </Text>
-              <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-1 dark:bg-gray-800">
+              <View className="flex-row flex-wrap gap-y-4 rounded-lg bg-gray-100 p-0 dark:bg-gray-800">
                 <View className="w-1/2 pr-2">
                   <Text className="text-sm text-gray-500 dark:text-gray-400">
                     Status
