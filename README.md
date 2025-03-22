@@ -25,6 +25,17 @@ cd ./fhir-app
 pnpm install
 ```
 
+Set MEDPLUM_CLIENT_ID in shell:
+MEDPLUM_CLIENT_ID can be created in app.medplum.com
+
+```sh
+vim ~/.zshrc
+```
+
+```sh
+export MEDPLUM_CLIENT_ID=xxxxxxxxx
+```
+
 To run the app on ios
 
 ```sh
