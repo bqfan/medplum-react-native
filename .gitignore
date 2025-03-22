@@ -19,3 +19,6 @@ package-lock.json
 
 expo-env.d.ts
 # @end expo-cli
+.env.development
+.env.production
+.env.staging
