@@ -23,7 +23,7 @@ export const medplum_client = new MedplumClient({
   // but you will need to change the protocol to 'http://' and the port to 8103 (the Medplum server's default) or whatever port your server is using
   // ------------------------------------------------------------------------------
   // clientId: 'MY_CLIENT_ID',
-  clientId: Env.MEDPLUM_CLIENT_ID,
+  clientId: '0195b69b-f52e-7209-b8d1-a58550616c86',
   // projectId: 'MY_PROJECT_ID',
   storage: new ExpoClientStorage(),
 });
