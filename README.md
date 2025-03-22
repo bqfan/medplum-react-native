@@ -25,7 +25,7 @@ cd ./fhir-app
 pnpm install
 ```
 
-Copy `.env.development.example` as `.env.development` and set `MEDPLUM_CLIENT_ID` in `.env.development` in where `MEDPLUM_CLIENT_ID` can be retrieved from https://app.medplum.com/ClientApplication.
+Copy `env.development.example` as `.env.development` and set `MEDPLUM_CLIENT_ID` in `.env.development` in where `MEDPLUM_CLIENT_ID` can be retrieved from https://app.medplum.com/ClientApplication.
 
 ```sh
 vim ~/.zshrc
