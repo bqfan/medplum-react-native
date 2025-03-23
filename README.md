@@ -57,3 +57,19 @@ pnpm android
 - [Forms](https://starter.obytes.com/ui-and-theme/Forms)
 - [Data fetching](https://starter.obytes.com/guides/data-fetching)
 - [Contribute to starter](https://starter.obytes.com/how-to-contribute/)
+
+## License
+
+[Apache 2.0](LICENSE.txt)
+
+Copyright &copy; Medplum 2025
+
+FHIR&reg; is a registered trademark of HL7.
+
+SNOMED&reg; is a registered trademark of the International Health Terminology Standards Development Organisation.
+
+LOINC&reg; is a registered trademark of Regenstrief Institute, Inc.
+
+DICOM&reg; is the registered trademark of the National Electrical Manufacturers Association (NEMA).
+
+Medplum&reg; is a registered trademark of Orangebot, Inc.
