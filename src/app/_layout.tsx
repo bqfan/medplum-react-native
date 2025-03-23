@@ -52,7 +52,7 @@ function Providers({ children }: { children: React.ReactNode }) {
   return (
     <GestureHandlerRootView
       style={styles.container}
-      className={theme.dark ? `dark` : undefined}
+      className={theme.dark ? 'dark' : undefined}
     >
       <KeyboardProvider>
         <ThemeProvider value={theme}>
