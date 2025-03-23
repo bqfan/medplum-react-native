@@ -205,11 +205,28 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
                       <Text className="text-xs text-gray-500 dark:text-gray-400">
                         Value
                       </Text>
-                      <Text className="text-xs font-semibold dark:text-gray-200">
-                        {obs?.valueQuantity?.value?.toFixed(2).toString() ??
-                          'N/A'}{' '}
-                        {obs?.valueQuantity?.unit ?? 'N/A'}
-                      </Text>
+                      {obs?.referenceRange?.map((range: ReferenceRange) => {
+                        console.log('low', range.low?.value);
+                        console.log('high', range.high?.value);
+                        const text_color =
+                          obs?.valueQuantity?.value !== undefined &&
+                          range.low?.value !== undefined &&
+                          range.high?.value !== undefined &&
+                          obs.valueQuantity.value >= range.low.value &&
+                          obs.valueQuantity.value <= range.high.value
+                            ? 'text-green-500'
+                            : 'text-red-500';
+                        return (
+                          <Text
+                            key={range.low?.value}
+                            className={`text-xs font-semibold ${text_color}`}
+                          >
+                            {obs?.valueQuantity?.value?.toFixed(2).toString() ??
+                              'N/A'}{' '}
+                            {obs?.valueQuantity?.unit ?? 'N/A'}
+                          </Text>
+                        );
+                      })}
                     </View>
                     {/* Reference Ranges */}
                     <View className="w-1/2 pl-2">
@@ -232,9 +249,7 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
 
                           return (
                             <Text key={rangeKey} className="text-xs">
-                              Reference Range (
-                              {range.type?.text || 'Unknown type'}
-                              ): {range.low?.value?.toString() ?? 'N/A'}{' '}
+                              {range.low?.value?.toString() ?? 'N/A'}{' '}
                               {range.low?.unit || ''} -{' '}
                               {range.high?.value?.toString() ?? 'N/A'}{' '}
                               {range.high?.unit || ''}
