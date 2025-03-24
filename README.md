@@ -45,7 +45,41 @@ pnpm android
 
 ## 📸 Screen shots
 
-<img src="/assets/images/screenshots/splash-screen.png" alt="splash screen" width=30%><img src="/assets/images/screenshots/onboarding.png" alt="onboarding screen" width=30%><img src="/assets/images/screenshots/login-screen.png" alt="login screen" width=30%><img src="/assets/images/screenshots/patient-list.png" alt="patient list" width=30%><img src="/assets/images/screenshots/patient-screen.png" alt="patient screen" width=30%><img src="/assets/images/screenshots/themes.png" alt="themes" width=30%><img src="/assets/images/screenshots/dark-theme.png" alt="dark-theme" width=30%>
+### Splash Screen
+
+<img src="/assets/images/screenshots/splash-screen.png" alt="splash screen" width=30%>
+
+### Onboarding Screen
+
+<img src="/assets/images/screenshots/onboarding.png" alt="onboarding screen" width=30%>
+
+### Login Screen
+
+<img src="/assets/images/screenshots/login-screen.png" alt="login screen" width=30%>
+
+### Patient List Screen
+
+<img src="/assets/images/screenshots/patient-list.png" alt="patient list" width=30%>
+
+### Patient Details Screen
+
+<img src="/assets/images/screenshots/patient-details.png" alt="patient screen" width=30%>
+
+### Diagnostic Report Screen
+
+<img src="/assets/images/screenshots/diagnostic-report1.png" alt="diagnostic report1" width=30%>
+
+### Diagnostic Report Screen
+
+<img src="/assets/images/screenshots/diagnostic-report2.png" alt="diagnostic report2" width=30%>
+
+### Settings Screen
+
+<img src="/assets/images/screenshots/themes.png" alt="themes" width=30%>
+
+### Dark Theme Screen
+
+<img src="/assets/images/screenshots/dark-theme.png" alt="dark-theme" width=30%>
 
 ## ✍️ Documentation
 
