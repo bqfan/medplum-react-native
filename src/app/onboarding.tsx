@@ -17,7 +17,7 @@ export default function Onboarding() {
       <FocusAwareStatusBar />
       <SafeAreaView className="w-full flex-1 items-center justify-center">
         <Image
-          source={require('../../assets/images/fhir-splash-icon.png')}
+          source={require('../../assets/images/hl7-fhir-logo.png')}
           style={{
             width: width * 0.8,
             height: width * 0.8,
