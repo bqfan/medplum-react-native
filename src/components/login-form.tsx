@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { Image } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import * as z from 'zod';
 
@@ -59,16 +60,18 @@ export const LoginForm = ({
     >
       <View className="flex-1 justify-center p-4">
         <View className="items-center justify-center">
-          {/* <Image
-            className="h-16 w-48 overflow-hidden rounded-t-xl"
-            source={require('../../assets/images/medplum-logo.png')}
+          <Image
+            className="h-24 w-1/2 overflow-hidden rounded-t-xl"
+            resizeMode="contain"
+            source={require('../../assets/images/hl7-fhir-logo.png')}
           />
-          <Text
-            testID="form-title"
-            className="pb-6 text-center text-lg font-bold"
-          >
-            FHIR Server
-          </Text> */}
+          <View className="flex flex-row items-center space-x-5 pb-16">
+            <Image
+              source={require('../../assets/images/medplum-icon.png')}
+              className="mr-2 size-6"
+            />
+            <Text className="text-sm font-semibold">Medplum FHIR Server</Text>
+          </View>
           <Text
             testID="form-title"
             className="pb-6 text-center text-4xl font-bold"
