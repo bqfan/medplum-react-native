@@ -1,5 +1,6 @@
 import type { DiagnosticReport, Observation, Patient } from 'fhir/r4';
 import { ScrollView, View } from 'react-native';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Text } from '@/components/ui/text';
 
@@ -217,7 +218,7 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
                               : 'text-red-500';
                           return (
                             <Text
-                              key={range.low?.value}
+                              key={uuidv4()}
                               className={`text-xs font-semibold ${text_color ?? 'text-gray-900'}`}
                             >
                               {obs?.valueQuantity?.value
@@ -242,20 +243,8 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
                       </Text>
                       <Text className="text-xs font-medium dark:text-gray-200">
                         {obs?.referenceRange?.map((range: ReferenceRange) => {
-                          const rangeKey =
-                            [
-                              range.type?.text,
-                              range.low?.value,
-                              range.low?.unit,
-                              range.high?.value,
-                              range.high?.unit,
-                            ]
-                              .filter(Boolean)
-                              .join('-')
-                              .replace(/\s+/g, '_') || crypto.randomUUID();
-
                           return (
-                            <Text key={rangeKey} className="text-xs">
+                            <Text key={uuidv4()} className="text-xs">
                               {range.low?.value?.toString() ?? 'N/A'}{' '}
                               {range.low?.unit || ''} -{' '}
                               {range.high?.value?.toString() ?? 'N/A'}{' '}
@@ -276,13 +265,8 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
                       </Text>
                       <Text className="text-xs font-medium dark:text-gray-200">
                         {obs?.category?.map((category) => {
-                          const categoryKey =
-                            category.coding?.[0]?.code ||
-                            category.text?.replace(/\s+/g, '-') ||
-                            crypto.randomUUID();
-
                           return (
-                            <Text key={categoryKey} className="text-xs">
+                            <Text key={uuidv4()} className="text-xs">
                               {category.coding
                                 ?.map((coding) => coding.display)
                                 .filter(Boolean)
@@ -305,17 +289,8 @@ const PatientScreen = ({ patient, reports }: PatientScreenProps) => {
                       </Text>
                       <Text className="text-xs font-medium dark:text-gray-300">
                         {obs?.performer?.map((performer) => {
-                          // Get a stable key from FHIR reference
-                          const resourceId = performer.reference
-                            ?.split('/')
-                            .pop(); // Extracts "123" from "Practitioner/123"
-                          const key =
-                            resourceId ||
-                            performer.display?.replace(/\s+/g, '-') ||
-                            crypto.randomUUID();
-
                           return (
-                            <Text key={key} className="text-sm">
+                            <Text key={uuidv4()} className="text-sm">
                               {performer.display ?? 'N/A'}
                             </Text>
                           );
