@@ -62,7 +62,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'expo-splash-screen',
       {
         backgroundColor: '#FFFFFF',
-        image: './assets/images/fhir-splash-icon.png',
+        image: './assets/images/hl7-fhir-logo.png',
         imageWidth: 150,
       },
     ],
